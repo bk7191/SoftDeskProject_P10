@@ -1,0 +1,20 @@
+[tool.poetry]
+name = "softdesk"
+version = "0.1.0"
+description = "API RESTful pour SoftDesk Support de gestion de projets et tâches pour ses utilisateurs."
+authors = ["bk7191 <bk7191014@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.12"
+Django = "^5.0.4"
+djangorestframework = "^3.15.1"
+djangorestframework-simplejwt = "^5.3.1"
+flake8-html = "^0.4.3"
+
+[tool.poetry.group.dev.dependencies]
+black = "^24.4.2"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
