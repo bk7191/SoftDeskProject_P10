@@ -1,5 +1,18 @@
 from django.contrib import admin
-from authentication.models import Users
+from django.contrib.auth.admin import UserAdmin  # Import UserAdmin from Django's admin
 
-admin.site.register(Users)
+from .models import CustomUser  # Assuming your model is in the same app
 
+
+class CustomUserAdmin(UserAdmin):
+    list_display = ['id', 'username', 'can_be_contacted',
+                    'can_data_be_shared', 'created_time']  # Fields to display in the list view
+    search_fields = ['username', 'email']  # Fields to search by
+    list_filter = ['can_be_contacted', 'can_data_be_shared', 'groups']  # Fields to filter by
+    ordering = ['username', ]  # Default sorting by username
+
+    # Don't show the password field
+    readonly_fields = ['password', ]
+
+
+admin.site.register(CustomUser, CustomUserAdmin)

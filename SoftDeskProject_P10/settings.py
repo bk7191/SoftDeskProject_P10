@@ -42,7 +42,7 @@ INSTALLED_APPS = [
     'rest_framework_simplejwt',
     'SoftDeskProject_P10',
     'authentication.apps.AuthenticationConfig',
-    # 'projects.apps.ProjectsConfig',
+    'projects.apps.ProjectsConfig',
     # 'issues.apps.IssuesConfig',
     # "comments.apps.CommentsConfig",
 ]
@@ -64,6 +64,7 @@ ROOT_URLCONF = 'SoftDeskProject_P10.urls'
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework_simplejwt.authentication.JWTAuthentication',
+        'rest_framework.permissions.IsAuthenticated',
     )
 }
 

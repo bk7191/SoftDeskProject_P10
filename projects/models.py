@@ -1,31 +1,24 @@
+from django.conf import settings
 from django.db import models
-from authentication.models import Users
+from authentication.models import CustomUser
 
 
 class Project(models.Model):
-    # name = models.CharField(max_length=255)
-    # description = models.TextField()
-    # project_type = models.CharField(max_length=255)
-    # contributors = models.ManyToManyField(Users, related_name='contributed_projects', blank=True)
-    # created_by = models.ForeignKey(Users, on_delete=models.CASCADE, related_name='created_projects')
-    #
-    # #     # Métadonnées
-    # class Meta:
-    #     db_table = "project"
-    #     ordering = ["name"]
-    #     verbose_name = "Projet"
-    #     verbose_name_plural = "Projets"
-    pass
+    CHOICES = [('back-end', 'back-end'), ('front-end', 'front-end'), ('iOS', 'iOS'), ('android', 'android')]
+    name = models.CharField(max_length=255, unique=True)
+    description = models.TextField(max_length=3096, blank=True)
+    project_type = models.CharField(max_length=255, choices=CHOICES, verbose_name='Type')
+    contributors = models.ManyToManyField(to=settings.AUTH_USER_MODEL, through='Contributor',
+                                          verbose_name='contributeur')
+    author = models.ForeignKey(to=settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='creators')
+    created_time = models.DateTimeField(auto_now_add=True)
+
+    # pass
 
 
 class Contributor(models.Model):
-    # user = models.ForeignKey(Users, on_delete=models.CASCADE)
-    # projects = models.ManyToManyField('project.Project')
-    #
-    # # Métadonnées
-    # class Meta:
-    #     db_table = "contributor"
-    #     ordering = ["user"]
-    #     verbose_name = "Contributeur"
-    #     verbose_name_plural = "Contributeurs"
-    pass
+    contributor = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
+    project = models.ForeignKey(Project, on_delete=models.CASCADE)
+
+    # pass
+

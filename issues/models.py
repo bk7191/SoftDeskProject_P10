@@ -13,9 +13,3 @@ class Issue(models.Model):
     created_by = models.ForeignKey(Users, on_delete=models.CASCADE, related_name='created_issues')
     created_time = models.DateTimeField(auto_now_add=True)
 
-    #     # Métadonnées
-    class Meta:
-        db_table = "issue"
-        ordering = ["title"]
-        verbose_name = "Problème"
-        verbose_name_plural = "Problèmes"

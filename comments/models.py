@@ -10,9 +10,3 @@ class Comment(models.Model):
     author = models.ForeignKey(Users, on_delete=models.CASCADE)
     issue = models.ForeignKey(Issue, on_delete=models.CASCADE, related_name='comments')
     created_time = models.DateTimeField(auto_now_add=True)
-    #     # Métadonnées
-    class Meta:
-        db_table = "comment"
-        ordering = ["created_time"]
-        verbose_name = "Commentaire"
-        verbose_name_plural = "Commentaires"
