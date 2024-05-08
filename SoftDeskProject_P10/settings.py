@@ -43,8 +43,8 @@ INSTALLED_APPS = [
     'SoftDeskProject_P10',
     'authentication.apps.AuthenticationConfig',
     'projects.apps.ProjectsConfig',
-    # 'issues.apps.IssuesConfig',
-    # "comments.apps.CommentsConfig",
+    'issues.apps.IssuesConfig',
+    "comments.apps.CommentsConfig",
 ]
 
 # Middleware framework
