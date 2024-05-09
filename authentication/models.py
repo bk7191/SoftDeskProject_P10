@@ -18,10 +18,13 @@ class CustomUser(AbstractUser):
     can_data_be_shared = models.BooleanField(default=False)
     created_time = models.DateTimeField(auto_now_add=True)
 
+    # updated_time pour information update
+    updated_time = models.DateTimeField(auto_now=True)
 
+    @property
     def age(self):
         if not self.date_of_birth:
             return None
         today = date.today()
         return (today.year - self.date_of_birth.year
-                - ((today.month, today.day) < (date_of_birth.month, date_of_birth.day)))
+                - ((today.month, today.day) < (self.date_of_birth.month, self.date_of_birth.day)))

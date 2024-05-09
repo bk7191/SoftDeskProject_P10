@@ -1,3 +1,16 @@
-from django.shortcuts import render
+from django.contrib.auth import get_user_model
+from rest_framework import viewsets
 
-# Create your views here.
+UserModel = get_user_model()
+
+
+class ProjectViewSet(viewsets.ModelViewSet):
+
+
+# CRUD projets
+
+
+class AdminProjectListView(viewsets.ReadOnlyModelViewSet):
+
+
+class ContributorViewSet(viewsets.ModelViewSet):
