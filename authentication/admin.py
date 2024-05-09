@@ -1,10 +1,9 @@
 from django.contrib import admin
-from django.contrib.auth.admin import UserAdmin  # Import UserAdmin from Django's admin
 
 from .models import CustomUser  # Assuming your model is in the same app
 
 
-class CustomUserAdmin(UserAdmin):
+class CustomUserAdmin(admin.ModelAdmin):
     list_display = ['id', 'username', 'can_be_contacted',
                     'can_data_be_shared', 'created_time']  # Fields to display in the list view
     search_fields = ['username', 'email']  # Fields to search by

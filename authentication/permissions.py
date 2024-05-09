@@ -1,6 +1,5 @@
 from rest_framework import permissions
 from rest_framework.exceptions import PermissionDenied
-from rest_framework.permissions import BasePermission
 
 
 class IsOwnerOrReadOnly(permissions.BasePermission):
@@ -14,5 +13,10 @@ class IsOwnerOrReadOnly(permissions.BasePermission):
         if request.method in permissions.SAFE_METHODS:
             return True
 
+
         # Write permissions are only allowed to the owner of the snippet.
         return obj == request.user
+
+# definir permissionsDenied
+
+# definir
