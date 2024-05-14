@@ -22,3 +22,8 @@ class CustomUserSerializer(serializers.ModelSerializer):
         instance.can_data_be_shared = validated_data.get('can_data_be_shared', instance.can_data_be_shared)
         instance.save()
         return instance
+
+
+class CustomUserCreateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = CustomUser
