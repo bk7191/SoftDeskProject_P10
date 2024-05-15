@@ -1,4 +1,4 @@
-from authentication.views import CustomUserViewSet
+from authentication.views import CustomUserViewSet, UserViewSet
 from rest_framework.routers import DefaultRouter
 
 router = DefaultRouter()

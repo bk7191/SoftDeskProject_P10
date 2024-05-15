@@ -1,4 +1,5 @@
-from rest_framework import serializers
+from django.contrib.auth.models import User
+from rest_framework import serializers, viewsets
 from .models import CustomUser
 
 
@@ -27,3 +28,10 @@ class CustomUserSerializer(serializers.ModelSerializer):
 class CustomUserCreateSerializer(serializers.ModelSerializer):
     class Meta:
         model = CustomUser
+
+
+# Serializers define the API representation.
+class UserSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = User
+        fields = ['url', 'username', 'email', 'is_staff']

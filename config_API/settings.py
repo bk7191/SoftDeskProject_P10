@@ -1,5 +1,5 @@
 """
-Django settings for SoftDeskProject_P10 project.
+Django settings for config_API project.
 
 Based on 'django-admin startproject' using Django 2.1.2.
 
@@ -40,7 +40,7 @@ INSTALLED_APPS = [
     # Add your apps here to enable them
     'rest_framework',
     'rest_framework_simplejwt',
-    'SoftDeskProject_P10',
+    'config_API',
     'authentication.apps.AuthenticationConfig',
     'projects.apps.ProjectsConfig',
     'issues.apps.IssuesConfig',
@@ -59,7 +59,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ROOT_URLCONF = 'SoftDeskProject_P10.urls'
+ROOT_URLCONF = 'config_API.urls'
 
 REST_FRAMEWORK = {
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
@@ -95,7 +95,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'SoftDeskProject_P10.wsgi.application'
+WSGI_APPLICATION = 'config_API.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/2.1/ref/settings/#databases
 DATABASES = {

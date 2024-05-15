@@ -25,3 +25,8 @@ class IsOwnerOrReadOnly(permissions.BasePermission):
 class IsAdminAuthenticated(BasePermission):
     def has_permission(self, request, view):
         return bool(request.user and request.user.is_authenticated and request.user.is_superuser)
+
+
+class IsCreationOrIsAuthenticated(BasePermission):
+    def has_permission(self, request, view):
+        return view.action == "create" or request.user.is_authenticated
