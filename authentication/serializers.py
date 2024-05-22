@@ -1,5 +1,7 @@
 from django.contrib.auth.models import User, Group
 from rest_framework import serializers, viewsets
+
+from projects.models import Contributor
 from .models import CustomUser
 
 
@@ -25,7 +27,6 @@ class CustomUserSerializer(serializers.ModelSerializer):
         return instance
 
 
-
 class CustomUserCreateSerializer(serializers.ModelSerializer):
     class Meta:
         model = CustomUser
@@ -42,3 +43,15 @@ class GroupSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Group
         fields = ['url', 'name']
+
+
+class ContributorSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Contributor
+        fields = '__all__'
+
+
+class ContributorDetailSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Contributor
+        fields = '__all__'
