@@ -1,3 +1,28 @@
+from django.http import HttpResponseForbidden, HttpResponseRedirect
+from django.urls import reverse
+from django.views import View
+from django.views.generic.detail import SingleObjectMixin
+from projects.models import Contributor
+
+
+class RecordInterestView(SingleObjectMixin, View):
+    """Records the current user's interest in an author."""
+
+    model = Contributor
+
+    def post(self, request, *args, **kwargs):
+        if not request.user.is_authenticated:
+            return HttpResponseForbidden()
+
+        # Look up the author we're interested in.
+        self.object = self.get_object()
+        # Actually record interest somehow here!
+
+        return HttpResponseRedirect(
+            reverse("author-detail", kwargs={"pk": self.object.pk})
+        )
+
+
 class GetDetailSerializerClassMixin:
     """
     Get detail serializer class

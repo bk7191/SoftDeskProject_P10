@@ -23,10 +23,9 @@ router.register('api/projects', ProjectViewSet, basename="projects")
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('login/', LoginView.as_view(redirect_authenticated_user=True), name='login'),
-
     path('logout/', LogoutView.as_view(next_page='login'), name='logout'),
-
-    path('api-auth/', include('rest_framework.urls')),
+                  # path('api-auth/', include('rest_framework.urls')),
+                  # path('api-auth/', include('config_API.urls.jwt')),
     path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     path('api/token/verify/', TokenVerifyView.as_view(), name='token_verify'),
