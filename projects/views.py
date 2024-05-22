@@ -1,21 +1,19 @@
-from django.contrib.auth import get_user_model
-from rest_framework import viewsets
-from authentication.models import *
+from rest_framework.permissions import IsAuthenticated
+
+from authentication.permissions import IsOwnerOrReadOnly
 from projects.models import *
 from authentication.serializers import *
-UserModel = get_user_model()
 
 
 class ProjectViewSet(viewsets.ModelViewSet):
     queryset = CustomUser.objects.all()
-    serializer_class = CustomUserSerializer
+    serializer_class = CustomUserSerializer()
+    permission_classes = [IsAuthenticated, IsOwnerOrReadOnly]
 
-# CRUD projets
-
-
-class AdminProjectListView(viewsets.ReadOnlyModelViewSet):
+    # Create
 
 
 class ContributorViewSet(viewsets.ModelViewSet):
     queryset = Contributor.project.all()
-    serializer_class = CustomUserSerializer
+    serializer_class = CustomUserSerializer()
+    permission_classes = [IsAuthenticated, ]

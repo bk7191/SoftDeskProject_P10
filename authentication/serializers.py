@@ -25,6 +25,7 @@ class CustomUserSerializer(serializers.ModelSerializer):
         return instance
 
 
+
 class CustomUserCreateSerializer(serializers.ModelSerializer):
     class Meta:
         model = CustomUser
