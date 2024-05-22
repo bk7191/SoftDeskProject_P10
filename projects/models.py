@@ -11,10 +11,10 @@ class Project(models.Model):
     author = models.ForeignKey(to=settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='creators')
     created_time = models.DateTimeField(auto_now_add=True)
 
-    # pass
+    def __str__(self):
+        return self.name
 
 
 class Contributor(models.Model):
     project = models.ForeignKey(Project, on_delete=models.CASCADE, related_name='contributeurs')
-    contributor = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
-
+    contributor = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name='contributor_of')

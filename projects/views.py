@@ -9,17 +9,18 @@ from projects.serializers import ProjectSerializer
 
 
 class ProjectViewSet(viewsets.ModelViewSet):
-    queryset = CustomUser.objects.all()
-    serializer_class = CustomUserSerializer(queryset, many=True)
-    permission_classes = [IsAuthenticated, IsOwnerOrReadOnly]
+    queryset = Project.objects.all()
+    serializer_class = ProjectSerializer
 
-    # 1. List all
-    def get_project(self, request, *args, **kwargs):
-        '''
-        List all the todo items for given requested user
-        '''
+    # permission_classes = [IsAuthenticated, IsOwnerOrReadOnly]
 
-        return Response(serializer_class.data, status=status.HTTP_200_OK)
+    # # 1. List all
+    # def get_project(self, request, *args, **kwargs):
+    #     '''
+    #     List all the todo items for given requested user
+    #     '''
+    #
+    #     return Response(serializer_class.data, status=status.HTTP_200_OK)
 
     # 2. Create
     def post_project(self, request, *args, **kwargs):

@@ -12,7 +12,7 @@ class IsOwnerOrReadOnly(permissions.BasePermission):
     """
 
     def has_permission(self, request, view):
-        return request.user.is_authenticated
+        return True
 
     def has_object_permission(self, request, view, obj):
         if request.method in SAFE_METHODS:
