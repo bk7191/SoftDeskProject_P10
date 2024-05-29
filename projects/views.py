@@ -5,13 +5,14 @@ from rest_framework.response import Response
 from authentication.permissions import IsOwnerOrReadOnly
 from projects.models import *
 from authentication.serializers import *
-from projects.serializers import ProjectSerializer
+from projects.serializers import ProjectSerializer, ProjectAuthorSimpleSerializer
 from projects.mixins import *
 
 
 class ProjectViewSet(viewsets.ModelViewSet):
     queryset = Project.objects.all()
     serializer_class = ProjectSerializer
+    http_method_names = ["get", "post", "head", "patch", "delete"]
 
     # permission_classes = [IsAuthenticated, IsOwnerOrReadOnly]
 
@@ -49,10 +50,12 @@ class ContributorViewSet(viewsets.ModelViewSet):
     detail_serializer_class = ContributorDetailSerializer
     serializer_class = ContributorSerializer
     permission_classes = [IsAuthenticated, ]
+    http_method_names = ["get", "post", "head", "patch", "delete"]
 
     def get_queryset(self):
         return Contributor.objects.all()
 
 
 class AuthorViewSet(viewsets.ModelViewSet):
-    pass
+    author_serializer_class = ProjectAuthorSimpleSerializer
+    http_method_names = ["get", "head"]

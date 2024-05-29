@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     # Add your apps here to enable them
     'rest_framework',
     'rest_framework_simplejwt',
+    'drf_spectacular',
     'config_API',
     'authentication.apps.AuthenticationConfig',
     'projects.apps.ProjectsConfig',
@@ -73,11 +74,12 @@ ROOT_URLCONF = 'config_API.urls'
 # }
 REST_FRAMEWORK = {
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
-    'PAGE_SIZE': 2,
+    'PAGE_SIZE': 20,
 
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework_simplejwt.authentication.JWTAuthentication',
-    )
+    ),
+    'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
 }
 SIMPLE_JWT = {
     'ACCESS_TOKEN_LIFETIME': timedelta(minutes=15),

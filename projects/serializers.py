@@ -36,3 +36,11 @@ class ProjectAuthorSerializer(serializers.ModelSerializer):
     class Meta:
         model = Project.author
         fields = "__all__"
+
+
+class ProjectAuthorSimpleSerializer(serializers.ModelSerializer):
+    author_obj = ProjectAuthorSerializer(source='author', read_only=True)
+
+    class Meta:
+        model = Project
+        fields = '__all__'
