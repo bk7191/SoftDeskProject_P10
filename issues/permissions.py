@@ -34,5 +34,5 @@ class IsContributor(BasePermission):
         if request.method == 'DELETE':
             return False
         if isinstance(obj, Issue):
-            return request.user == obj.contributor
+            return request.user == obj.assignee
         return request.user in obj.contributors.all()

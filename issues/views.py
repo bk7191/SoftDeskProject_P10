@@ -1,7 +1,9 @@
 from django.shortcuts import render
 from rest_framework import viewsets
-from rest_framework.permissions import AllowAny
+from rest_framework.generics import get_object_or_404
+from rest_framework.permissions import AllowAny, IsAuthenticated
 
+from comments.permissions import ContributorPermission
 from issues.serializers import IssueSerializer
 from issues.models import Issue
 from projects.models import Project
@@ -17,7 +19,18 @@ class IssueViewSet(viewsets.ModelViewSet):
     serializer_class = IssueSerializer
     # permission_classes = [permissions.IsAuthenticated]
     http_method_names = ["get", "post", "head", "patch", "delete"]
-    permission_classes = [AllowAny]
+    permission_classes = [IsAuthenticated, ContributorPermission]
+
+    def get_queryset(self):
+        project_pk = self.kwargs["project_pk"]
+        return Issue.objects.filter(project__pk=project_pk)
+
+    def perform_create(self, serializer):
+        """
+        Perform a create on the serializer, ensuring project is included.
+        """
+        project = get_object_or_404(Project, pk=self.kwargs["project_pk"])
+        serializer.save(author=self.request.user, project=project)
 
     def get_serializer_class(self):
         if self.action == 'list':
