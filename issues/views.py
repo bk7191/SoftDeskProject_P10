@@ -4,6 +4,7 @@ from rest_framework.generics import get_object_or_404
 from rest_framework.permissions import AllowAny, IsAuthenticated
 
 from comments.permissions import ContributorPermission
+from issues.permissions import IsContributor
 from issues.serializers import IssueSerializer
 from issues.models import Issue
 from projects.models import Project
@@ -19,7 +20,8 @@ class IssueViewSet(viewsets.ModelViewSet):
     serializer_class = IssueSerializer
     # permission_classes = [permissions.IsAuthenticated]
     http_method_names = ["get", "post", "head", "patch", "delete"]
-    permission_classes = [IsAuthenticated, ContributorPermission]
+
+    # permission_classes = [IsAuthenticated, IsContributor]
 
     def get_queryset(self):
         project_pk = self.kwargs["project_pk"]
@@ -33,7 +35,14 @@ class IssueViewSet(viewsets.ModelViewSet):
         serializer.save(author=self.request.user, project=project)
 
     def get_serializer_class(self):
+        # à traiter dans permissions
         if self.action == 'list':
             return ProjectAuthorSimpleSerializer
 
         return self.serializer_class
+
+    def destroy(self, request, *args, **kwargs):
+        # à traiter dans permissions qui a droit pour customUser
+        if self.action == "delete":
+            issues = Issue.objects.get(pk=issue_pk)
+            issues.delete()

@@ -29,10 +29,16 @@ class IsAuthor(BasePermission):
 
 
 class IsContributor(BasePermission):
+    def has_permission(self, request, view):
+        if request.method == "POST":  # si il veut creer issue dans projet
+            project_id = request.data.get('projet')
+            current_user = request.user
+
+
 
     def has_object_permission(self, request, view, obj):
+
         if request.method == 'DELETE':
-            return False
-        if isinstance(obj, Issue):
-            return request.user == obj.assignee
+            if isinstance(obj, Issue):
+                return request.user == obj.assignee
         return request.user in obj.contributors.all()
