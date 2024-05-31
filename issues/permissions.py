@@ -5,6 +5,7 @@ import projects
 from .models import Issue
 from projects.models import Contributor
 
+
 class IsOwnerOrReadOnly(permissions.BasePermission):
     """
     Custom permission to only allow owners of an object to edit it.
@@ -33,8 +34,6 @@ class IsContributor(BasePermission):
         if request.method == "POST":  # si il veut creer issue dans projet
             project_id = request.data.get('projet')
             current_user = request.user
-
-
 
     def has_object_permission(self, request, view, obj):
 

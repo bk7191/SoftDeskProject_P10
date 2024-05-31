@@ -38,6 +38,26 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
         model = User
         fields = ['url', 'username', 'email', 'groups', 'is_staff']
 
+    def create(self, validated_data):
+        users = User(
+            username=validated_data["username"],
+            can_be_contacted=validated_data["can_be_contacted"],
+            can_data_be_shared=validated_data["can_data_be_shared"],
+        )
+        users.set_password(validated_data["password"])
+        users.save()
+        return users
+
+    def update(self, instance, validated_data):
+        instance.username = validated_data.get("username", instance.username)
+        instance.can_be_contacted = validated_data.get("can_be_contacted", instance.can_be_contacted)
+        instance.can_data_be_shared = validated_data.get("can_data_be_shared", instance.can_data_be_shared)
+        instance.age = validated_data.get("age", instance.age)
+        if "password" in validated_data:
+            instance.set_password(validated_data["password"])
+        instance.save()
+        return instance
+
 
 class GroupSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:

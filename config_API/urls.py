@@ -7,7 +7,7 @@ from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 from authentication.views import UserViewSet, CustomUserViewSet
 from comments.views import CommentViewSet
 from issues.views import IssueViewSet
-from projects.views import ProjectViewSet
+from projects.views import ProjectViewSet, ContributorViewSet
 from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView, SpectacularRedocView
 # from issues.views import IssuesViewSet
 
@@ -20,6 +20,7 @@ router.register(r'users', CustomUserViewSet, basename="users")
 router.register('api/projects', ProjectViewSet, basename="projects")
 router.register('api/issue', IssueViewSet, basename="issues")
 router.register('api/comments', CommentViewSet, basename="comments")
+router.register('api/contributor', ContributorViewSet, basename="contributor")
 
 
 urlpatterns = [

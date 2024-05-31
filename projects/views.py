@@ -49,7 +49,7 @@ class ProjectViewSet(viewsets.ModelViewSet):
 class ContributorViewSet(viewsets.ModelViewSet):
     detail_serializer_class = ContributorDetailSerializer
     serializer_class = ContributorSerializer
-    permission_classes = [IsAuthenticated, ]
+    # permission_classes = [IsAuthenticated, ]
     http_method_names = ["get", "post", "head", "patch", "delete"]
 
     def get_queryset(self):

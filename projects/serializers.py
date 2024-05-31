@@ -1,4 +1,6 @@
 from rest_framework import serializers
+
+from authentication.models import CustomUser
 from .models import Project
 
 
@@ -22,10 +24,9 @@ class ProjectSerializer(serializers.ModelSerializer):
         from rest_framework import serializers
         from .models import Project
 
-        project = Project.objects.get(pk=1)
-        serializer = ProjectSerializer(project)
-        json_data = serializer.data
     """
+    author = serializers.PrimaryKeyRelatedField(read_only=True)
+    contributors = serializers.PrimaryKeyRelatedField(queryset=CustomUser.objects.all(), many=True, required=False)
 
     class Meta:
         model = Project
