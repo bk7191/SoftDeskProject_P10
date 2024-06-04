@@ -1,5 +1,5 @@
 from django.contrib import admin
-from authentication.models import CustomUser  # Assuming Users model is in 'authentication' app
+
 from .models import Project, Contributor  # Assuming models are in the same app
 
 

@@ -70,6 +70,22 @@ class ContributorSerializer(serializers.ModelSerializer):
         model = Contributor
         fields = '__all__'
 
+    def create(self, project):
+        contributor = Contributor.objects.create(project=project)
+        return contributor
+
+    def get_contributors(self, project):
+        contributors = Contributor.objects.filter(project=project)
+        return contributors
+
+    def update_contributor(self, contributor, user):
+        contributor.contributor = user
+        contributor.save()
+        return contributor
+
+    def delete_contributor(self, contributor):
+        contributor.delete()
+
 
 class ContributorDetailSerializer(serializers.ModelSerializer):
     class Meta:

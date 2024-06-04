@@ -13,7 +13,7 @@ from projects.serializers import ProjectAuthorSimpleSerializer
 
 class IssueViewSet(viewsets.ModelViewSet):
     """
-    class Issue réservée aux utilistateurs connectes et authentifiés
+    class Issue réservée aux utilisateurs connectes et authentifiés
 
     """
     # queryset = User.objects.all()
@@ -24,7 +24,7 @@ class IssueViewSet(viewsets.ModelViewSet):
     # permission_classes = [IsAuthenticated, IsContributor]
 
     def get_queryset(self):
-        project_pk = self.kwargs["project_pk"]
+        project = self.kwargs["project_pk"]
         return Issue.objects.filter(project__pk=project_pk)
 
     def perform_create(self, serializer):
