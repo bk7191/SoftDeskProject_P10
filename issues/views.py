@@ -24,8 +24,9 @@ class IssueViewSet(viewsets.ModelViewSet):
     # permission_classes = [IsAuthenticated, IsContributor]
 
     def get_queryset(self):
-        project = self.kwargs["project_pk"]
-        return Issue.objects.filter(project__pk=project_pk)
+        project = get_object_or_404(Project, id=self.kwargs["project_id"])
+        queryset = Issue.objects.filter(project=project)
+        return queryset.ordering("created_time")
 
     def perform_create(self, serializer):
         """
