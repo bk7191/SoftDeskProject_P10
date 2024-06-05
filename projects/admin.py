@@ -13,7 +13,7 @@ class ProjectAdmin(admin.ModelAdmin):
 
 
 class ContributorAdmin(admin.ModelAdmin):
-    list_display = ("contributor", 'project')
+    list_display = ("user", 'project')
 
 
 admin.site.register(Project, ProjectAdmin)
