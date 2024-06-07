@@ -18,12 +18,12 @@ class CommentViewSet(viewsets.ModelViewSet):
     serializer_class = CommentSerializer
     http_method_names = ["get", "put", "patch", "delete"]
 
-    def get_permissions(self):
-        if self.request.method == "GET":
-            permission_classes = [IsAuthenticated, ContributorPermission]
-        elif self.request.method in ["PUT", "PATCH", "DELETE"]:
-            permission_classes = [IsAuthenticated, IsAuthor]
-        return [permission() for permission in permission_classes]
+    # def get_permissions(self):
+    #     if self.request.method == "GET":
+    #         permission_classes = [IsAuthenticated, ContributorPermission]
+    #     elif self.request.method in ["PUT", "PATCH", "DELETE"]:
+    #         permission_classes = [IsAuthenticated, IsAuthor]
+    #     return [permission() for permission in permission_classes]
 
     def get_queryset(self):
         project_pk = self.kwargs["project_pk"]
