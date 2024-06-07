@@ -26,9 +26,9 @@ class CommentViewSet(viewsets.ModelViewSet):
     #     return [permission() for permission in permission_classes]
 
     def get_queryset(self):
-        project_pk = self.kwargs["project_pk"]
-        issue_pk = self.kwargs["issue_pk"]
-        uuid = self.kwargs["pk"]
+        project_pk = self.kwargs["project_id"]
+        issue_pk = self.kwargs["issue_id"]
+        uuid = self.kwargs["id"]
         return Comment.objects.filter(
             issue__project__id=project_pk, issue_id=issue_pk, id=uuid
         )
