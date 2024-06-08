@@ -18,3 +18,7 @@ class Project(models.Model):
 class Contributor(models.Model):
     project = models.ForeignKey(Project, on_delete=models.CASCADE, related_name='contributeurs')
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name='contributor_of')
+
+    class Meta:
+        verbose_name = "Contributor"
+        verbose_name_plural = "Contributors"
