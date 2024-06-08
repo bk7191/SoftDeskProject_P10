@@ -5,6 +5,7 @@ from rest_framework.generics import get_object_or_404
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
 
+import projects
 from comments.permissions import ContributorPermission
 from issues.permissions import IsContributor
 from issues.serializers import IssueSerializer
@@ -71,7 +72,8 @@ class IssueViewSet(viewsets.ModelViewSet):
         """
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
-        print(Issue.assignee)
+        print(Project.author)
+        serializer.save(project_id=projects, assignee=self.request.user, author=self.request.user)
         # if Issue.assignee:
         #     return Issue.assignee
         # self.perform_create(serializer)
