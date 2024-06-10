@@ -14,7 +14,7 @@ class CommentViewSet(viewsets.ModelViewSet):
     class Issue réservée aux utilistateurs connectes et authentifiés
 
     """
-    # queryset = User.objects.all()
+    queryset = Comment.objects.all()
     serializer_class = CommentSerializer
     http_method_names = ["get", "put", "patch", "delete"]
 
@@ -25,10 +25,10 @@ class CommentViewSet(viewsets.ModelViewSet):
     #         permission_classes = [IsAuthenticated, IsAuthor]
     #     return [permission() for permission in permission_classes]
 
-    def get_queryset(self):
-        project_pk = self.kwargs["author_id"]
-        issue_pk = self.kwargs["issue_id"]
-        uuid = self.kwargs["id"]
-        return Comment.objects.filter(
-            issue__project__id=project_pk, issue_id=issue_pk, id=uuid
-        )
+    # def get_queryset(self):
+    #     project_pk = self.kwargs["author_id"]
+    #     issue_pk = self.kwargs["issue_id"]
+    #     uuid = self.kwargs["id"]
+    #     return Comment.objects.filter(
+    #         issue__project__id=project_pk, issue_id=issue_pk, id=uuid
+    #     )

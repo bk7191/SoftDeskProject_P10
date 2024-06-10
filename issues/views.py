@@ -5,6 +5,7 @@ from rest_framework.generics import get_object_or_404
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
 
+import issues.serializers
 import projects
 from comments.permissions import ContributorPermission
 from issues.permissions import IsContributor
@@ -66,21 +67,21 @@ class IssueViewSet(viewsets.ModelViewSet):
         serializer = self.get_serializer(issue)
         return Response(serializer.data)
 
-    # def create(self, request, *args, **kwargs):
-    #     """
-    #     Create a new issue
-    #     """
-    #     serializer = self.get_serializer(data=request.data)
-    #     serializer.is_valid(raise_exception=True)
-    #     print(Project.author)
-    #     serializer.save(project_id=projects, assignee=self.request.user, author=self.request.user)
-    #     # if Issue.assignee:
-    #     #     return Issue.assignee
-    #     # self.perform_create(serializer)
-    #     headers = self.get_success_headers(serializer.data)
-    #     return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
     def create(self, validated_data):
-        assignee_instance = CustomUser.get
+        """
+        Create a new issue
+        """
+        # serializer = self.get_serializer(data=request.data)
+        # serializer.is_valid(raise_exception=True)
+        # print(serializer)
+        # serializer.save(project_id=projects, assignee="assignee_id", author=self.request.user)
+        # # if Issue.assignee:
+        # #     return Issue.assignee
+        # # self.perform_create(serializer)
+        # headers = self.get_success_headers(serializer.data)
+        # return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
+        pass
+        return super().create(validated_data)
 
     def update(self, request, *args, **kwargs):
         """

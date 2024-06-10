@@ -54,7 +54,7 @@ class ContributorSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         print(validated_data)
-        contributor = Contributor.objects.create(project=validated_data['project'], user=validated_data['user'])
+        contributor = Contributor.objects.create(project=validated_data['project_id'], user=validated_data['user_id'])
 
         return contributor
 
