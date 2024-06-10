@@ -26,7 +26,7 @@ class ProjectSerializer(serializers.ModelSerializer):
 
     """
     author = serializers.PrimaryKeyRelatedField(read_only=True)
-    contributors = serializers.PrimaryKeyRelatedField(queryset=CustomUser.objects.all(), many=True, required=False)
+    contributor = serializers.PrimaryKeyRelatedField(queryset=CustomUser.objects.all(), many=True, required=False)
 
     class Meta:
         model = Project
@@ -55,11 +55,12 @@ class ContributorSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         print(validated_data)
         contributor = Contributor.objects.create(project=validated_data['project'], user=validated_data['user'])
+
         return contributor
 
     def get_contributors(self, project):
-        contributors = Contributor.objects.filter(project=project)
-        return contributors
+        contributor = Contributor.objects.filter(project=project)
+        return contributor
 
     def update_contributor(self, contributor, user):
         contributor.user = user

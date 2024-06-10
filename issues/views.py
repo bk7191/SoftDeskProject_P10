@@ -66,19 +66,21 @@ class IssueViewSet(viewsets.ModelViewSet):
         serializer = self.get_serializer(issue)
         return Response(serializer.data)
 
-    def create(self, request, *args, **kwargs):
-        """
-        Create a new issue
-        """
-        serializer = self.get_serializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
-        print(Project.author)
-        serializer.save(project_id=projects, assignee=self.request.user, author=self.request.user)
-        # if Issue.assignee:
-        #     return Issue.assignee
-        # self.perform_create(serializer)
-        headers = self.get_success_headers(serializer.data)
-        return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
+    # def create(self, request, *args, **kwargs):
+    #     """
+    #     Create a new issue
+    #     """
+    #     serializer = self.get_serializer(data=request.data)
+    #     serializer.is_valid(raise_exception=True)
+    #     print(Project.author)
+    #     serializer.save(project_id=projects, assignee=self.request.user, author=self.request.user)
+    #     # if Issue.assignee:
+    #     #     return Issue.assignee
+    #     # self.perform_create(serializer)
+    #     headers = self.get_success_headers(serializer.data)
+    #     return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
+    def create(self, validated_data):
+        assignee_instance = CustomUser.get
 
     def update(self, request, *args, **kwargs):
         """
