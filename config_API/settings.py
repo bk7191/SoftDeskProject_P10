@@ -14,7 +14,7 @@ import os
 import posixpath
 from datetime import timedelta
 
-import kolo.middleware
+# import kolo.middleware
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))

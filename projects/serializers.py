@@ -13,20 +13,18 @@ class ProjectSerializer(serializers.ModelSerializer):
     de Django REST Framework pour automatiser la création des champs de
     sérialisation à partir des champs du modèle.
 
-    Attributs:
-        Meta (classe): Classe de métadonnées pour configurer le sérialiseur.
-            model (classe): Le modèle à sérialiser (Project).
-            fields (str ou liste): Les champs du modèle à inclure dans la
-                sérialisation. '__all__' signifie que tous les champs seront
-                inclus.
-
-    Exemple d'utilisation:
-        from rest_framework import serializers
-        from .models import Project
-
     """
     author = serializers.PrimaryKeyRelatedField(read_only=True)
     contributor = serializers.PrimaryKeyRelatedField(queryset=CustomUser.objects.all(), many=True, required=False)
+
+    def create(self, validated_data):
+        author = validated_data.pop("author")
+        author_instance = Project.objects.get(pk=author)
+        validated_data["contributor"] = author_instance
+        return super().create(validated_data)
+
+    def update(self, instance, validated_data):
+        return super().update(instance, validated_data)
 
     class Meta:
         model = Project
@@ -75,3 +73,6 @@ class ContributorDetailSerializer(serializers.ModelSerializer):
     class Meta:
         model = Contributor
         fields = '__all__'
+
+    def perform_create(self, serializer):
+        serializer.save()
