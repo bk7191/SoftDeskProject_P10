@@ -8,7 +8,6 @@ from authentication.views import CustomUserViewSet
 from comments.views import CommentViewSet
 from issues.views import IssueViewSet
 from projects.views import ProjectViewSet, ContributorViewSet
-from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView, SpectacularRedocView
 
 # from issues.views import IssuesViewSet
 
