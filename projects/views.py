@@ -2,6 +2,7 @@ from rest_framework import status, viewsets
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 
+import projects
 from authentication.permissions import IsOwnerOrReadOnly
 from projects.models import *
 from authentication.serializers import *
@@ -19,6 +20,8 @@ class ProjectViewSet(viewsets.ModelViewSet):
 
 
 class ContributorViewSet(viewsets.ModelViewSet):
+    queryset = Contributor.objects.all()
+
     detail_serializer_class = ContributorDetailSerializer
     serializer_class = ContributorSerializer
     # permission_classes = [IsAuthenticated, ]
