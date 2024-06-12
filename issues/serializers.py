@@ -10,3 +10,8 @@ class IssueSerializer(serializers.ModelSerializer):
         model = Issue
         fields = "__all__"
 
+    # def create(self, validated_data):
+    #     author = validated_data.pop("assignee")
+    #     author_instance = Project.objects.get(pk=author)
+    #     validated_data["created_by"] = author_instance
+    #     return super().create(validated_data)

@@ -15,16 +15,19 @@ class ProjectSerializer(serializers.ModelSerializer):
 
     """
     author = serializers.PrimaryKeyRelatedField(read_only=True)
-    contributor = serializers.PrimaryKeyRelatedField(queryset=CustomUser.objects.all(), many=True, required=False)
+    contributor = serializers.PrimaryKeyRelatedField(queryset=CustomUser.objects.all(), many=True, required=True)
+    print(author)
+    print(contributor)
 
     def create(self, validated_data):
-        author = validated_data.pop("author")
-        author_instance = Project.objects.get(pk=author)
+        author = validated_data.pop("contributor")
+        print(author)
+        author_instance = Project.objects.get(pk=author_id)
         validated_data["contributor"] = author_instance
         return super().create(validated_data)
 
-    def update(self, instance, validated_data):
-        return super().update(instance, validated_data)
+    def perform_update(self, serializer):
+        serializer.save()
 
     class Meta:
         model = Project
