@@ -11,6 +11,11 @@ class Project(models.Model):
     author = models.ForeignKey(to=settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='creators')
     created_time = models.DateTimeField(auto_now_add=True)
 
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(fields=['name'], name='unique_project_name')
+        ]
+
     def __str__(self):
         return self.name
 

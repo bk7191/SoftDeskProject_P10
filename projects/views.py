@@ -29,8 +29,3 @@ class ContributorViewSet(viewsets.ModelViewSet):
 
     # def get_queryset(self):
     #     return Contributor.objects.all()
-
-
-class AuthorViewSet(viewsets.ModelViewSet):
-    author_serializer_class = ProjectAuthorSimpleSerializer
-    http_method_names = ["get", "head"]

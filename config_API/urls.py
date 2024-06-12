@@ -7,7 +7,7 @@ from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 from authentication.views import CustomUserViewSet
 from comments.views import CommentViewSet
 from issues.views import IssueViewSet
-from projects.views import ProjectViewSet, ContributorViewSet, AuthorViewSet
+from projects.views import ProjectViewSet, ContributorViewSet
 
 # from issues.views import IssuesViewSet
 
