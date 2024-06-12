@@ -40,7 +40,7 @@ class ProjectSerializer(serializers.ModelSerializer):
     """
     author = serializers.PrimaryKeyRelatedField(read_only=True)
     # contributor = serializers.PrimaryKeyRelatedField(queryset=CustomUser.objects.all(), many=True, required=True)
-    contributors = ContributorSerializer(many=True, read_only=True)
+    contributeurs = ContributorSerializer(many=True, read_only=True)
 
     def create(self, validated_data):
         author = self.context['request'].user
@@ -53,7 +53,7 @@ class ProjectSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Project
-        fields = ['name', 'contributors', 'description', 'project_type', 'author',
+        fields = ['name', 'contributeurs', 'description', 'project_type', 'author',
                   'created_time']
 
 

@@ -1,17 +1,22 @@
 from rest_framework import serializers
+
+from authentication.models import CustomUser
+from authentication.serializers import CustomUserSerializer
 from .models import Issue
 
 
 class IssueSerializer(serializers.ModelSerializer):
-    assignee = serializers.IntegerField(read_only=True)
-    created_by = serializers.IntegerField(write_only=True, )
+    assignee_id = serializers.IntegerField(write_only=True)
+    assignee = CustomUserSerializer(many=False, read_only=True)
+
+    # created_by = serializers.IntegerField(write_only=True, )
 
     class Meta:
         model = Issue
         fields = "__all__"
 
-    # def create(self, validated_data):
-    #     author = validated_data.pop("assignee")
-    #     author_instance = Project.objects.get(pk=author)
-    #     validated_data["created_by"] = author_instance
-    #     return super().create(validated_data)
+    def create(self, validated_data):
+        assignee_id = validated_data.pop("assignee_id")
+        validated_data["assignee"] = CustomUser.objects.filter(pk=assignee_id).first()
+        validated_data["created_by"] = self.context['request'].user
+        return super().create(validated_data)
