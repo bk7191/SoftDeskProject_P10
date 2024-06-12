@@ -7,7 +7,7 @@ from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 from authentication.views import CustomUserViewSet
 from comments.views import CommentViewSet
 from issues.views import IssueViewSet
-from projects.views import ProjectViewSet, ContributorViewSet
+from projects.views import ProjectViewSet, ContributorViewSet, AuthorViewSet
 
 # from issues.views import IssuesViewSet
 
@@ -26,9 +26,11 @@ urlpatterns = [
                   path('admin/', admin.site.urls),
                   path('login/', LoginView.as_view(redirect_authenticated_user=True), name='login'),
                   path('logout/', LogoutView.as_view(next_page='login'), name='logout'),
-                  # path('api-auth/', include('rest_framework.urls')),
+                  path('api-auth/', include('rest_framework.urls')),
+
                   # path('api-auth/', include('config_API.urls.jwt')),
                   # path('api/issue/', IssueViewSet.as_view({'get': 'list'}), name='issues'),
+
                   path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
                   path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
                   path('api/token/verify/', TokenVerifyView.as_view(), name='token_verify'),

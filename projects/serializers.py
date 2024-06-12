@@ -4,58 +4,14 @@ from authentication.models import CustomUser
 from .models import Project, Contributor
 
 
-class ProjectSerializer(serializers.ModelSerializer):
-    """
-    Sérialiseur pour le modèle Project.
-
-    Ce sérialiseur permet de convertir les instances du modèle Project en
-    représentations JSON et vice-versa. Il utilise la classe ModelSerializer
-    de Django REST Framework pour automatiser la création des champs de
-    sérialisation à partir des champs du modèle.
-
-    """
-    author = serializers.PrimaryKeyRelatedField(read_only=True)
-    contributor = serializers.PrimaryKeyRelatedField(queryset=CustomUser.objects.all(), many=True, required=True)
-    print(author)
-    print(contributor)
-
-    def create(self, validated_data):
-        author = validated_data.pop("contributor")
-        print(author)
-        author_instance = Project.objects.get(pk=author_id)
-        validated_data["contributor"] = author_instance
-        return super().create(validated_data)
-
-    def perform_update(self, serializer):
-        serializer.save()
-
-    class Meta:
-        model = Project
-        fields = "__all__"
-
-
-class ProjectAuthorSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Project.author
-        fields = "__all__"
-
-
-class ProjectAuthorSimpleSerializer(serializers.ModelSerializer):
-    author_obj = ProjectAuthorSerializer(source='author', read_only=True)
-
-    class Meta:
-        model = Project
-        fields = '__all__'
-
-
 class ContributorSerializer(serializers.ModelSerializer):
     class Meta:
         model = Contributor
         fields = '__all__'
 
     def create(self, validated_data):
-        print(validated_data)
-        contributor = Contributor.objects.create(project=validated_data['project_id'], user=validated_data['user_id'])
+        print("ContributorSerializer", validated_data)
+        contributor = Contributor.objects.create(project=validated_data['project'], user=validated_data['user'])
 
         return contributor
 
@@ -70,6 +26,49 @@ class ContributorSerializer(serializers.ModelSerializer):
 
     def delete_contributor(self, contributor):
         contributor.delete()
+
+
+class ProjectSerializer(serializers.ModelSerializer):
+    """
+    Sérialiseur pour le modèle Project.
+
+    Ce sérialiseur permet de convertir les instances du modèle Project en
+    représentations JSON et vice-versa. Il utilise la classe ModelSerializer
+    de Django REST Framework pour automatiser la création des champs de
+    sérialisation à partir des champs du modèle.
+
+    """
+    author = serializers.PrimaryKeyRelatedField(read_only=True)
+    # contributor = serializers.PrimaryKeyRelatedField(queryset=CustomUser.objects.all(), many=True, required=True)
+    contributors = ContributorSerializer(many=True, read_only=True)
+
+    def create(self, validated_data):
+        author = self.context['request'].user
+        print(author)
+        validated_data["author"] = author
+        return super().create(validated_data)
+
+    def perform_update(self, serializer):
+        serializer.save()
+
+    class Meta:
+        model = Project
+        fields = ['name', 'contributors', 'description', 'project_type', 'author',
+                  'created_time']
+
+
+class ProjectAuthorSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Project.author
+        fields = "__all__"
+
+
+class ProjectAuthorSimpleSerializer(serializers.ModelSerializer):
+    author_obj = ProjectAuthorSerializer(source='author', read_only=True)
+
+    class Meta:
+        model = Project
+        fields = '__all__'
 
 
 class ContributorDetailSerializer(serializers.ModelSerializer):
