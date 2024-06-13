@@ -17,8 +17,12 @@ class CustomUserSerializer(serializers.ModelSerializer):
             "can_be_contacted",
             "can_data_be_shared",
             "created_time",
+            # ajout password
+            "password",
         ]
         read_only_fields = ["created_time"]
+        # ajout extra
+        extra_kwargs = {'password': {'write_only': True}}
 
     def create(self, validated_data):
         user = CustomUser.objects.create_user(**validated_data)
@@ -46,7 +50,6 @@ class CustomUserSerializer(serializers.ModelSerializer):
 class CustomUserCreateSerializer(serializers.ModelSerializer):
     class Meta:
         model = CustomUser
-
 
 # desactiver group
 # class GroupSerializer(serializers.HyperlinkedModelSerializer):

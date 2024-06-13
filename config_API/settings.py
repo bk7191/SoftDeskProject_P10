@@ -14,6 +14,8 @@ import os
 import posixpath
 from datetime import timedelta
 
+import rest_framework.pagination
+
 # import kolo.middleware
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -73,11 +75,16 @@ ROOT_URLCONF = "config_API.urls"
 #     )
 # }
 REST_FRAMEWORK = {
-    "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.PageNumberPagination",
-    "PAGE_SIZE": 6,
+    "DEFAULT_PAGINATION_CLASS": ("rest_framework.pagination.PageNumberPagination",
+                                 'rest_framework.pagination.LimitOffsetPagination'),
+    "PAGE_SIZE": 100,
     "DEFAULT_AUTHENTICATION_CLASSES": (
         "rest_framework_simplejwt.authentication.JWTAuthentication",
+        # ajout gestion token
+        "rest_framework_jwt.authentication.JSONWebTokenAuthentication",
         "rest_framework.authentication.SessionAuthentication",
+        "rest_framework.authentication.BasicAuthentication",
+
     ),
 }
 SIMPLE_JWT = {
