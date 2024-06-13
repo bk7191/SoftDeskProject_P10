@@ -13,8 +13,6 @@ from comments.views import CommentViewSet
 from issues.views import IssueViewSet
 from projects.views import ProjectViewSet, ContributorViewSet
 
-# from issues.views import IssuesViewSet
-
 # Routers provide an easy way of automatically determining the URL conf.
 router = routers.DefaultRouter()
 router.register(r"users", CustomUserViewSet, basename="users")
@@ -27,6 +25,7 @@ router.register("api/comments", CommentViewSet, basename="comments")
 router.register("api/contributor", ContributorViewSet, basename="contributor")
 
 urlpatterns = [
+
                   path("admin/", admin.site.urls),
                   path("login/", LoginView.as_view(redirect_authenticated_user=True), name="login"),
                   path("logout/", LogoutView.as_view(next_page="login"), name="logout"),

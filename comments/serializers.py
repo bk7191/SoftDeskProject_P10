@@ -16,7 +16,7 @@ class CommentPostUpdateSerializer(serializers.ModelSerializer):
 class CommentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Comment
-        fields = "__all__"
+        fields = ["text", "issue", "author", "created_time"]
 
     #     # read_only_fields = ["id", "author", "created_time", "issue"]
     # author_id = serializers.IntegerField(write_only=True)
