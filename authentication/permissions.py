@@ -12,7 +12,6 @@ class IsOwnerOrReadOnly(permissions.BasePermission):
         # Read permissions are allowed to any request,
         # so we'll always allow GET, HEAD or OPTIONS requests.
 
-
         # Write permissions are only allowed to the owner of the snippet.
         return request.user.is_superuser or obj == request.user
 
@@ -23,7 +22,9 @@ class IsOwnerOrReadOnly(permissions.BasePermission):
 # definit permission pour utilisateurs authentifies
 class IsAdminAuthenticated(BasePermission):
     def has_permission(self, request, view):
-        return bool(request.user and request.user.is_authenticated and request.user.is_superuser)
+        return bool(
+            request.user and request.user.is_authenticated and request.user.is_superuser
+        )
 
 
 class IsCreationAndIsStaff(BasePermission):

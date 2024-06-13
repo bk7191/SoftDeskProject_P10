@@ -14,6 +14,7 @@ class CommentViewSet(viewsets.ModelViewSet):
     class Issue réservée aux utilistateurs connectes et authentifiés
 
     """
+
     queryset = Comment.objects.all()
     serializer_class = CommentSerializer
     # http_method_names = ["get", "put", "patch", "delete"]

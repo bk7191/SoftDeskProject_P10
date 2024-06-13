@@ -45,9 +45,7 @@ class IsProjectContributorAuthenticated(BasePermission):
 
     def has_object_permission(self, request, view, obj):
         project_contributors = [
-            user.user_id for user in Contributor.objects.filter(
-                project_id=obj.id
-            )
+            user.user_id for user in Contributor.objects.filter(project_id=obj.id)
         ]
         if isinstance(obj, Issue):
             project_contributors.extend(
@@ -69,9 +67,7 @@ class CanManageProjectContributors(BasePermission):
         if request.method == "DELETE":
             contributing_to = [
                 project.project_id
-                for project in Contributor.objects.filter(
-                    user_id=request.user.id
-                )
+                for project in Contributor.objects.filter(user_id=request.user.id)
             ]
 
             if obj.project.id in contributing_to:

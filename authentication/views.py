@@ -3,6 +3,7 @@ from rest_framework import viewsets, permissions
 from rest_framework.permissions import IsAuthenticated
 from .models import CustomUser
 from .serializers import CustomUserSerializer
+
 # from .serializers import CustomUserSerializer, GroupSerializer
 from .permissions import IsOwnerOrReadOnly
 

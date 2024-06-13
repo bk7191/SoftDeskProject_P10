@@ -19,9 +19,8 @@ class IssueViewSet(viewsets.ModelViewSet):
     class Issue réservée aux utilisateurs connectes et authentifiés
 
     """
+
     queryset = Issue.objects.all()
     serializer_class = IssueSerializer
     # permission_classes = [permissions.IsAuthenticated]
     http_method_names = ["get", "post", "head", "patch", "delete"]
-
-

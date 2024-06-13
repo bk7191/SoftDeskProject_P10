@@ -6,8 +6,12 @@ import projects
 from authentication.permissions import IsOwnerOrReadOnly
 from projects.models import *
 from authentication.serializers import *
-from projects.serializers import ProjectSerializer, ProjectAuthorSimpleSerializer, ContributorDetailSerializer, \
-    ContributorSerializer
+from projects.serializers import (
+    ProjectSerializer,
+    ProjectAuthorSimpleSerializer,
+    ContributorDetailSerializer,
+    ContributorSerializer,
+)
 from projects.mixins import *
 
 

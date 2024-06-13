@@ -7,11 +7,13 @@ from .models import Project, Contributor
 class ContributorSerializer(serializers.ModelSerializer):
     class Meta:
         model = Contributor
-        fields = '__all__'
+        fields = "__all__"
 
     def create(self, validated_data):
         print("ContributorSerializer", validated_data)
-        contributor = Contributor.objects.create(project=validated_data['project'], user=validated_data['user'])
+        contributor = Contributor.objects.create(
+            project=validated_data["project"], user=validated_data["user"]
+        )
 
         return contributor
 
@@ -38,12 +40,13 @@ class ProjectSerializer(serializers.ModelSerializer):
     sérialisation à partir des champs du modèle.
 
     """
+
     author = serializers.PrimaryKeyRelatedField(read_only=True)
     # contributor = serializers.PrimaryKeyRelatedField(queryset=CustomUser.objects.all(), many=True, required=True)
     contributeurs = ContributorSerializer(many=True, read_only=True)
 
     def create(self, validated_data):
-        author = self.context['request'].user
+        author = self.context["request"].user
         print(author)
         validated_data["author"] = author
         return super().create(validated_data)
@@ -53,8 +56,14 @@ class ProjectSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Project
-        fields = ['name', 'contributeurs', 'description', 'project_type', 'author',
-                  'created_time']
+        fields = [
+            "name",
+            "contributeurs",
+            "description",
+            "project_type",
+            "author",
+            "created_time",
+        ]
 
 
 class ProjectAuthorSerializer(serializers.ModelSerializer):
@@ -64,17 +73,17 @@ class ProjectAuthorSerializer(serializers.ModelSerializer):
 
 
 class ProjectAuthorSimpleSerializer(serializers.ModelSerializer):
-    author_obj = ProjectAuthorSerializer(source='author', read_only=True)
+    author_obj = ProjectAuthorSerializer(source="author", read_only=True)
 
     class Meta:
         model = Project
-        fields = '__all__'
+        fields = "__all__"
 
 
 class ContributorDetailSerializer(serializers.ModelSerializer):
     class Meta:
         model = Contributor
-        fields = '__all__'
+        fields = "__all__"
 
     def perform_create(self, serializer):
         serializer.save()

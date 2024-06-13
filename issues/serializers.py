@@ -18,5 +18,5 @@ class IssueSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         assignee_id = validated_data.pop("assignee_id")
         validated_data["assignee"] = CustomUser.objects.filter(pk=assignee_id).first()
-        validated_data["created_by"] = self.context['request'].user
+        validated_data["created_by"] = self.context["request"].user
         return super().create(validated_data)
