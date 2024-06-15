@@ -8,7 +8,6 @@ from projects.models import *
 from authentication.serializers import *
 from projects.serializers import (
     ProjectSerializer,
-    ProjectAuthorSimpleSerializer,
     ContributorDetailSerializer,
     ContributorSerializer,
 )
@@ -20,7 +19,7 @@ class ProjectViewSet(viewsets.ModelViewSet):
     serializer_class = ProjectSerializer
     http_method_names = ["get", "post", "head", "patch", "delete"]
 
-    # permission_classes = [IsAuthenticated, IsOwnerOrReadOnly]
+    permission_classes = [IsAuthenticated, IsOwnerOrReadOnly]
 
 
 class ContributorViewSet(viewsets.ModelViewSet):

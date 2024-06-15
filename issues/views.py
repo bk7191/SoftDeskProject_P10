@@ -6,6 +6,7 @@ from rest_framework.response import Response
 
 import issues.serializers
 import projects
+from authentication.permissions import IsCreationAndIsStaff
 from comments.permissions import ContributorPermission
 from issues.permissions import IsContributor
 from issues.serializers import IssueSerializer
@@ -22,5 +23,5 @@ class IssueViewSet(viewsets.ModelViewSet):
 
     queryset = Issue.objects.all()
     serializer_class = IssueSerializer
-    # permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [IsAuthenticated, IsCreationAndIsStaff]
     http_method_names = ["get", "post", "head", "patch", "delete"]

@@ -5,14 +5,14 @@ from .models import CustomUser
 from .serializers import CustomUserSerializer
 
 # from .serializers import CustomUserSerializer, GroupSerializer
-from .permissions import IsOwnerOrReadOnly
+from .permissions import IsOwnerOrReadOnly, IsCreationAndIsStaff
 
 
 class CustomUserViewSet(viewsets.ModelViewSet):
     queryset = CustomUser.objects.all()
     serializer_class = CustomUserSerializer
 
-    # permission_classes = [IsAuthenticated, IsOwnerOrReadOnly]
+    permission_classes = [IsAuthenticated, IsOwnerOrReadOnly, IsCreationAndIsStaff]
 
 # class GroupViewSet(viewsets.ModelViewSet):
 #     """
