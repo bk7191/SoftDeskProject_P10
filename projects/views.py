@@ -6,6 +6,7 @@ import projects
 from authentication.permissions import IsOwnerOrReadOnly
 from projects.models import *
 from authentication.serializers import *
+from projects.permissions import IsProjectContributorAuthenticated
 from projects.serializers import (
     ProjectSerializer,
     ContributorDetailSerializer,

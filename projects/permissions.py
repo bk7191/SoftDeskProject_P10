@@ -32,7 +32,7 @@ class IsProjectContributorAuthenticated(BasePermission):
             project_contributors = [
                 user.user_id
                 for user in Contributor.objects.filter(
-                    project_id=request.data["project"]
+                    project_id=validated_data["project_id"]
                 )
             ]
             if request.user.id in project_contributors:
