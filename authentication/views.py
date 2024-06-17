@@ -12,7 +12,8 @@ class CustomUserViewSet(viewsets.ModelViewSet):
     queryset = CustomUser.objects.all()
     serializer_class = CustomUserSerializer
 
-    permission_classes = [IsAuthenticated, IsOwnerOrReadOnly, IsCreationAndIsStaff]
+    # permission_classes = [IsAuthenticated, IsOwnerOrReadOnly, IsCreationAndIsStaff]
+    permission_classes = [IsAuthenticated, IsCreationAndIsStaff]
 
 # class GroupViewSet(viewsets.ModelViewSet):
 #     """

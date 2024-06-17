@@ -19,7 +19,7 @@ class CommentViewSet(viewsets.ModelViewSet):
     queryset = Comment.objects.all()
     serializer_class = CommentSerializer
     # http_method_names = ["get", "put", "patch", "delete"]
-    permission_classes = [IsAuthenticated, IsCreationAndIsStaff]
+    permission_classes = [IsAuthenticated, IsCreationAndIsStaff, ContributorPermission]
 
     # def get_permissions(self):
     #     if self.request.method == "GET":
