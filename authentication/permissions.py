@@ -16,7 +16,6 @@ class IsOwnerOrReadOnly(permissions.BasePermission):
         return request.user.is_superuser or obj == request.user
 
 
-# definir permissionsDenied
 
 
 # definit permission pour utilisateurs authentifies
