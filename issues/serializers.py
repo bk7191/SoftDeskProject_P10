@@ -14,6 +14,7 @@ class IssueSerializer(serializers.ModelSerializer):
     class Meta:
         model = Issue
         fields = "__all__"
+        # depth = 2
 
     def create(self, validated_data):
         assignee_id = validated_data.pop("assignee_id")

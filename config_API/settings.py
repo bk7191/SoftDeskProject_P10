@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     # Add your apps here to enable them
     "rest_framework",
     "rest_framework_simplejwt",
+    'oauth2_provider',
     "config_API",
     "authentication.apps.AuthenticationConfig",
     "projects.apps.ProjectsConfig",
@@ -84,6 +85,7 @@ REST_FRAMEWORK = {
         "rest_framework_jwt.authentication.JSONWebTokenAuthentication",
         "rest_framework.authentication.SessionAuthentication",
         "rest_framework.authentication.BasicAuthentication",
+        'oauth2_provider.contrib.rest_framework.OAuth2Authentication',
 
     ),
 }

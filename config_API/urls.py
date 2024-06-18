@@ -28,7 +28,6 @@ urlpatterns = [
                   path("admin/", admin.site.urls),
                   path("login/", LoginView.as_view(redirect_authenticated_user=True), name="login"),
                   path("logout/", LogoutView.as_view(next_page="login"), name="logout"),
-
                   path("api/", include(router.urls)),
                   path("api-auth/", include("rest_framework.urls")),
                   path("api/token/", TokenObtainPairView.as_view(), name="token_obtain_pair"),

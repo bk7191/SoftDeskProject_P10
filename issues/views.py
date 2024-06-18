@@ -23,5 +23,5 @@ class IssueViewSet(viewsets.ModelViewSet):
 
     queryset = Issue.objects.all()
     serializer_class = IssueSerializer
-    permission_classes = [IsAuthenticated, IsCreationAndIsStaff, IsContributor]
+    # permission_classes = [IsAuthenticated, IsCreationAndIsStaff, IsContributor]
     http_method_names = ["get", "post", "head", "patch", "delete"]
