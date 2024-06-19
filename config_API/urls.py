@@ -1,7 +1,6 @@
 from django.contrib import admin
 from django.contrib.auth.views import LogoutView, LoginView
 from django.urls import path, include
-from django.views.decorators.csrf import csrf_exempt
 from rest_framework import routers
 from rest_framework_simplejwt.views import (
     TokenObtainPairView,
@@ -16,7 +15,9 @@ from projects.views import ProjectViewSet, ContributorViewSet
 
 # Routers provide an easy way of automatically determining the URL conf.
 router = routers.DefaultRouter()
-router.register(r"users", CustomUserViewSet, basename="users")
+router.register(r"api/users", CustomUserViewSet, basename="users")
+# urls.py
+
 
 # Wire up our API using automatic URL routing.
 

@@ -4,9 +4,9 @@ from rest_framework import viewsets
 from rest_framework.permissions import IsAuthenticated
 
 from .models import CustomUser
-# from .serializers import CustomUserSerializer, GroupSerializer
+# from .serializers import CustomUserSerializer, GroupSerializer,
 from .permissions import IsAdminAuthenticated, IsAuthenticatedOrReadOnly
-from .serializers import CustomUserSerializer
+from .serializers import CustomUserSerializer, CustomUserCreateSerializer, SignupSerializer
 
 
 class CustomUserViewSet(viewsets.ModelViewSet):
@@ -19,5 +19,8 @@ class CustomUserViewSet(viewsets.ModelViewSet):
 
 
 class CreateUserViewSet(viewsets.ModelViewSet):
-    queryset = get_user_model()
-    serializer_class = CustomUserSerializer
+    queryset = CustomUser.objects.all()
+    # serializer_class = CustomUserCreateSerializer
+    serializer_class = SignupSerializer
+
+    # permission_classes = [IsAuthenticatedOrReadOnly]

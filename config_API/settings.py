@@ -44,7 +44,7 @@ INSTALLED_APPS = [
     # Add your apps here to enable them
     "rest_framework",
     "rest_framework_simplejwt",
-    'oauth2_provider',
+    # 'oauth2_provider',
     "config_API",
     "authentication.apps.AuthenticationConfig",
     "projects.apps.ProjectsConfig",
@@ -62,7 +62,7 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
-    'oauth2_provider.middleware.OAuth2TokenMiddleware',
+    # 'oauth2_provider.middleware.OAuth2TokenMiddleware',
 
 ]
 
