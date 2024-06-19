@@ -7,4 +7,4 @@ class ContributorPermission(permissions.BasePermission):
     """
 
     def has_object_permission(self, request, view, obj):
-        return request.user in obj.issue.project.contributors.all()
+        return request.user in obj.issue.project.contributor.all()

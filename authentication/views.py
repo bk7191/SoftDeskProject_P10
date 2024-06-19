@@ -16,7 +16,7 @@ class CustomUserViewSet(viewsets.ModelViewSet):
     serializer_class = CustomUserSerializer
 
     # permission_classes = [IsAuthenticated, IsOwnerOrReadOnly, IsCreationAndIsStaff]
-    permission_classes = [IsAuthenticated, IsCreationAndIsStaff, IsOwnerOrReadOnly]
+    # permission_classes = [IsAuthenticated, IsCreationAndIsStaff, IsOwnerOrReadOnly]
 
     # @action(detail=True, methods=['post'])
     # def set_password(self, request, pk=None):
