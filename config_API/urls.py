@@ -9,7 +9,7 @@ from rest_framework_simplejwt.views import (
     TokenVerifyView,
 )
 
-from authentication.views import CustomUserViewSet
+from authentication.views import CustomUserViewSet, CreateUserViewSet
 from comments.views import CommentViewSet
 from issues.views import IssueViewSet
 from projects.views import ProjectViewSet, ContributorViewSet
@@ -24,6 +24,7 @@ router.register("api/projects", ProjectViewSet, basename="projects")
 router.register("api/issue", IssueViewSet, basename="issues")
 router.register("api/comments", CommentViewSet, basename="comments")
 router.register("api/contributor", ContributorViewSet, basename="contributor")
+router.register("signup", CreateUserViewSet, basename="signup")
 
 urlpatterns = [
                   path("admin/", admin.site.urls),
@@ -31,7 +32,7 @@ urlpatterns = [
                   path("logout/", LogoutView.as_view(next_page="login"), name="logout"),
                   path("api/", include(router.urls)),
                   path("api-auth/", include("rest_framework.urls")),
-                  path("api/token/", csrf_exempt(TokenObtainPairView.as_view()), name="token_obtain_pair"),
+                  path("api/token/", TokenObtainPairView.as_view(), name="token_obtain_pair"),
                   path("api/token/refresh/", TokenRefreshView.as_view(), name="token_refresh"),
                   path("api/token/verify/", TokenVerifyView.as_view(), name="token_verify"),
               ] + router.urls
