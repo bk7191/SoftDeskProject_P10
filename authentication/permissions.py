@@ -1,6 +1,5 @@
 from rest_framework import permissions
-from rest_framework.permissions import BasePermission
-from rest_framework.exceptions import PermissionDenied
+from rest_framework.permissions import BasePermission, SAFE_METHODS
 
 
 class IsOwnerOrReadOnly(permissions.BasePermission):
@@ -16,8 +15,6 @@ class IsOwnerOrReadOnly(permissions.BasePermission):
         return request.user.is_superuser or obj == request.user
 
 
-
-
 # definit permission pour utilisateurs authentifies
 class IsAdminAuthenticated(BasePermission):
     def has_permission(self, request, view):
@@ -28,8 +25,8 @@ class IsAdminAuthenticated(BasePermission):
 
 class IsCreationAndIsStaff(BasePermission):
     def has_permission(self, request, view):
-        if request.method == "GET":
-            return request.user and request.user.is_staff
+        if request.method == "GET" or request.method == "PUT" or request.method == "PATCH":
+            return request.user and request.user.is_staff and request.user.is_authenticated
         return True
 
     def has_object_permission(self, request, view, obj):
@@ -39,3 +36,13 @@ class IsCreationAndIsStaff(BasePermission):
             return True
         # Write permissions are only allowed to the owner of the snippet.
         return obj == request.user
+
+
+class IsTheUser(BasePermission):
+    def has_permission(self, request, view):
+        return bool(request.user and request.user.is_staff)
+
+
+class IsAuthenticatedOrReadOnly(BasePermission):
+    def has_permission(self, request, view):
+        return bool(request.method in SAFE_METHODS or request.user and request.user.is_authenticated)
