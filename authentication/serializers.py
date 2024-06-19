@@ -1,10 +1,9 @@
-from django.contrib.auth.models import User, Group
-from rest_framework import serializers
-
-from projects.models import Contributor
-from .models import CustomUser
 from django.contrib.auth import get_user_model
 from django.contrib.auth.password_validation import validate_password
+from rest_framework import serializers
+
+from .models import CustomUser
+
 
 class CustomUserSerializer(serializers.ModelSerializer):
     class Meta:
