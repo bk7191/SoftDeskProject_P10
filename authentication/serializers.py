@@ -49,22 +49,6 @@ class CustomUserSerializer(serializers.ModelSerializer):
 
 
 # ajouter condition si IsAuthenticated None alors pas afficher fields
-class CustomUserCreateSerializer(serializers.ModelSerializer):
-    def create(self, validated_data):
-        user = CustomUser.objects.create_user(**validated_data)
-        user.save()
-        return user
-
-    class Meta:
-        model = CustomUser
-        fields = ['username', "password", "is_active"]
-
-# desactiver group
-# class GroupSerializer(serializers.HyperlinkedModelSerializer):
-#     class Meta:
-#         model = Group
-#         fields = ['url', 'name']
-
 
 class SignupSerializer(serializers.ModelSerializer):
     class Meta:
