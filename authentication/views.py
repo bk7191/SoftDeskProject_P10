@@ -8,7 +8,7 @@ from .models import CustomUser
 from .serializers import CustomUserSerializer
 
 # from .serializers import CustomUserSerializer, GroupSerializer
-from .permissions import IsOwnerOrReadOnly, IsCreationAndIsStaff
+from .permissions import IsOwnerOrReadOnly, IsCreationAndIsStaff, IsAdminAuthenticated
 
 
 class CustomUserViewSet(viewsets.ModelViewSet):
@@ -16,7 +16,7 @@ class CustomUserViewSet(viewsets.ModelViewSet):
     serializer_class = CustomUserSerializer
 
     # permission_classes = [IsAuthenticated, IsOwnerOrReadOnly, IsCreationAndIsStaff]
-    # permission_classes = [IsAuthenticated, IsCreationAndIsStaff, IsOwnerOrReadOnly]
+    permission_classes = [IsAdminAuthenticated]
 
     # @action(detail=True, methods=['post'])
     # def set_password(self, request, pk=None):
