@@ -12,14 +12,14 @@ class CustomUserSerializer(serializers.ModelSerializer):
         fields = [
             "id",
             "username",
-            "email",
-            "date_of_birth",
-            "consent_choice",
-            "can_be_contacted",
-            "can_data_be_shared",
-            "created_time",
+            # "email",
+            # "date_of_birth",
+            # "consent_choice",
+            # "can_be_contacted",
+            # "can_data_be_shared",
+            # "created_time",
             # ajout password
-            "password",
+            # "password",
         ]
         read_only_fields = ["created_time"]
         # ajout extra
@@ -54,7 +54,16 @@ class SignupSerializer(serializers.ModelSerializer):
     class Meta:
         # model = get_user_model()
         model = CustomUser
-        fields = ['username', 'first_name', 'last_name', 'email', 'password', ]
+        fields = [
+            'username',
+            'first_name',
+            'last_name',
+            'email',
+            'password',
+            "can_be_contacted",
+            "can_data_be_shared",
+            "consent_choice",
+        ]
         extra_kwargs = {
             'password': {'write_only': True}
         }
