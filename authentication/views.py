@@ -1,24 +1,20 @@
 from rest_framework import viewsets
 from rest_framework.permissions import IsAuthenticated
+from rest_framework.response import Response
 
 from .models import CustomUser
 # from .serializers import CustomUserSerializer, GroupSerializer,
-from .permissions import IsAuthenticatedOrReadOnly
-from .serializers import CustomUserSerializer, SignupSerializer
+from .permissions import IsTheUser, IsOwnerOrReadOnly
+from .serializers import CustomUserSerializer
 
 
 class CustomUserViewSet(viewsets.ModelViewSet):
     queryset = CustomUser.objects.all()
     serializer_class = CustomUserSerializer
+    # permission_classes = [IsTheUser, ]
+    permission_classes = [IsAuthenticated | IsOwnerOrReadOnly]
 
     # permission_classes = [IsAuthenticated, IsOwnerOrReadOnly, IsCreationAndIsStaff]
     # permission_classes = [IsAdminAuthenticated]
-    permission_classes = [IsAuthenticated, IsAuthenticatedOrReadOnly, ]
-
-
-class CreateUserViewSet(viewsets.ModelViewSet):
-    queryset = CustomUser.objects.all()
-    # serializer_class = CustomUserCreateSerializer
-    serializer_class = SignupSerializer
-
-    # permission_classes = [IsAuthenticatedOrReadOnly]
+    def get(self, request, format=None):
+        pass
