@@ -3,6 +3,7 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 
 import projects
+import projects.serializers
 from authentication.permissions import IsOwnerOrReadOnly, IsCreationAndIsStaff, IsTheUser, IsAuthenticatedOrReadOnly
 from issues.permissions import IsContributor
 from projects.models import *
@@ -19,9 +20,14 @@ from projects.mixins import *
 class ProjectViewSet(viewsets.ModelViewSet):
     queryset = Project.objects.all()
     serializer_class = ProjectSerializer
-    http_method_names = ["get", "post", "head", "patch", "delete"]
+    # http_method_names = ["get", "post", "head", "patch", "delete"]
 
     permission_classes = [IsAuthenticated, IsAuthenticatedOrReadOnly, ]
+
+    def update(self, request, *args, **kwargs):
+        kwargs['partial'] = True
+        author_queryset = projects.serializers.ContributorSerializer
+        return super().update(request, author_queryset, *kwargs)
 
 class ContributorViewSet(viewsets.ModelViewSet):
     queryset = Contributor.objects.all()
