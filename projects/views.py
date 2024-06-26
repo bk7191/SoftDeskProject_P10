@@ -7,7 +7,8 @@ import projects.serializers
 from authentication.permissions import *
 from projects.models import *
 from authentication.serializers import *
-from projects.permissions import IsProjectContributorAuthenticated, IsContributor
+from projects.permissions import IsProjectContributorAuthenticated, IsContributor, CanManageProjectContributors
+from rest_framework_simplejwt.authentication import JWTAuthentication
 from projects.serializers import (
     ProjectSerializer,
     ContributorDetailSerializer,
@@ -17,12 +18,15 @@ from projects.mixins import *
 
 
 class ProjectViewSet(viewsets.ModelViewSet, GetDetailSerializerClassMixin, RecordInterestView):
+    authentication_classes = [JWTAuthentication]
     queryset = Project.objects.all()
     serializer_class = ProjectSerializer
 
     # http_method_names = ["get", "post", "head", "patch", "delete"]
+    permission_classes = [IsAuthenticated]
 
-    permission_classes = [IsAuthenticated, IsAuthenticatedOrReadOnly, ContributorPermission]
+    def get(self, request):
+        return Response({'message': 'Authenticated'})
 
     def update(self, request, *args, **kwargs):
         kwargs["partial"] = True

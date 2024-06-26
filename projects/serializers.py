@@ -1,5 +1,7 @@
-from rest_framework import serializers
+from django.db.models import Q
+from rest_framework import serializers, request
 
+import projects
 from authentication.models import CustomUser
 from .models import Project, Contributor
 
@@ -14,15 +16,19 @@ class ContributorSerializer(serializers.ModelSerializer):
         contributor = Contributor.objects.create(
             project=validated_data["project"], user=validated_data["user"]
         )
-
+        print(contributor)
         return contributor
 
     def get_contributors(self, project):
         contributor = Contributor.objects.filter(project=project)
+        print(contributor)
+
         return contributor
 
     def update_contributor(self, contributor, user):
         contributor.user = user
+        print(contributor)
+
         contributor.save()
         return contributor
 
@@ -47,9 +53,13 @@ class ProjectSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         author = self.context["request"].user
-        print(author)
-        validated_data["author"] = author
+        validated_data["author"] = author.username
         return super().create(validated_data)
+
+    def get_contributors(self, contributeurs):
+        contributeurs_list = Project.objects.filter(
+            Q(user=request.user, contributeurs=contributeurs))
+        return contributeurs_list
 
     def perform_update(self, serializer):
         serializer.save()

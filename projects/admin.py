@@ -5,6 +5,7 @@ from .models import Project, Contributor  # Assuming models are in the same app
 
 class ProjectAdmin(admin.ModelAdmin):
     list_display = (
+        "id",
         "name",
         "description",
         "project_type",
