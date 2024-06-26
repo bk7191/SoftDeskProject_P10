@@ -13,7 +13,7 @@ class CustomUserSerializer(ModelSerializer):
         ]
         read_only_fields = ["created_time"]
         # ajout extra
-        extra_kwargs = {'password': {'write_only': True}}
+        extra_kwargs = {"password": {"write_only": True}}
 
     def create(self, validated_data):
         user = CustomUser.objects.create_user(**validated_data)
@@ -57,7 +57,7 @@ class CustomUserDetailedSerializer(ModelSerializer):
         ]
         read_only_fields = ["created_time"]
         # ajout extra
-        extra_kwargs = {'password': {'write_only': True}}
+        extra_kwargs = {"password": {"write_only": True}}
 
     def create(self, validated_data):
         user = CustomUser.objects.create_user(**validated_data)

@@ -1,6 +1,8 @@
 from rest_framework import permissions
 from rest_framework.permissions import BasePermission, SAFE_METHODS
 
+from projects.models import Contributor
+
 
 class IsOwnerOrReadOnly(BasePermission):
     """
@@ -21,10 +23,28 @@ class IsAdminAuthenticated(BasePermission):
         )
 
 
+class ContributorPermission(BasePermission):
+    """
+    only allow contributors of a project to view or create
+    """
+
+    def has_object_permission(self, request, view, obj):
+        return Contributor.objects.filter(
+            project=obj,
+            user=request.user
+        ).exists()
+
+
 class IsCreationAndIsStaff(BasePermission):
     def has_permission(self, request, view):
-        if request.method == "GET" or request.method == "PUT" or request.method == "PATCH":
-            return request.user and request.user.is_staff and request.user.is_authenticated
+        if (
+                request.method == "GET"
+                or request.method == "PUT"
+                or request.method == "PATCH"
+        ):
+            return (
+                    request.user and request.user.is_staff and request.user.is_authenticated
+            )
         return True
 
     def has_object_permission(self, request, view, obj):
@@ -36,11 +56,10 @@ class IsCreationAndIsStaff(BasePermission):
         return obj == request.user
 
 
-class IsTheUser(BasePermission):
-    def has_permission(self, request, view):
-        return bool(request.user and request.user.is_staff)
-
-
 class IsAuthenticatedOrReadOnly(BasePermission):
     def has_permission(self, request, view):
-        return bool(request.method in SAFE_METHODS or request.user and request.user.is_authenticated)
+        return bool(
+            request.method in SAFE_METHODS
+            or request.user
+            and request.user.is_authenticated
+        )

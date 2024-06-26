@@ -63,7 +63,6 @@ MIDDLEWARE = [
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     # 'oauth2_provider.middleware.OAuth2TokenMiddleware',
-
 ]
 
 ROOT_URLCONF = "config_API.urls"
@@ -78,21 +77,20 @@ ROOT_URLCONF = "config_API.urls"
 #     )
 # }
 REST_FRAMEWORK = {
-    "DEFAULT_PAGINATION_CLASS": ("rest_framework.pagination.PageNumberPagination",
-                                 'rest_framework.pagination.LimitOffsetPagination'),
+    "DEFAULT_PAGINATION_CLASS": (
+        "rest_framework.pagination.PageNumberPagination",
+        "rest_framework.pagination.LimitOffsetPagination",
+    ),
     "PAGE_SIZE": 100,
     "DEFAULT_AUTHENTICATION_CLASSES": (
         "rest_framework_simplejwt.authentication.JWTAuthentication",
-
         # ajout gestion token
         # "rest_framework_jwt.authentication.JSONWebTokenAuthentication",
         "rest_framework.authentication.SessionAuthentication",
         # "rest_framework.authentication.BasicAuthentication",
         # 'oauth2_provider.contrib.rest_framework.OAuth2Authentication',
-
     ),
-    "DEFAULT_PERMISSION_CLASSES": ('rest_framework.permissions.IsAuthenticated',
-                                   ),
+    "DEFAULT_PERMISSION_CLASSES": ("rest_framework.permissions.IsAuthenticated",),
 }
 SIMPLE_JWT = {
     "ACCESS_TOKEN_LIFETIME": timedelta(minutes=15),

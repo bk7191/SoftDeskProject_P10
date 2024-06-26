@@ -8,7 +8,7 @@ import issues.serializers
 import projects
 from authentication.permissions import IsCreationAndIsStaff, IsAuthenticatedOrReadOnly
 from comments.permissions import ContributorPermission
-from issues.permissions import IsContributor, IsAuthor
+from projects.permissions import IsContributor, IsAuthor
 from issues.serializers import IssueSerializer
 from issues.models import Issue
 from projects.models import Project
@@ -23,7 +23,7 @@ class IssueViewSet(viewsets.ModelViewSet):
 
     queryset = Issue.objects.all()
     serializer_class = IssueSerializer
-    permission_classes = [IsAuthenticated, IsAuthenticatedOrReadOnly, ]
+    # permission_classes = [IsAuthenticated, IsAuthenticatedOrReadOnly, ]
 
     # permission_classes = [IsAuthenticated, IsCreationAndIsStaff, IsContributor]
     http_method_names = ["get", "post", "head", "patch", "delete"]

@@ -2,12 +2,14 @@ from django.shortcuts import render
 from rest_framework import viewsets
 from rest_framework.permissions import IsAuthenticated
 
-from authentication.permissions import IsCreationAndIsStaff, IsAuthenticatedOrReadOnly
+from authentication.permissions import (
+    IsCreationAndIsStaff,
+    IsAuthenticatedOrReadOnly,
+    ContributorPermission,
+)
 from comments.models import Comment
-from comments.permissions import ContributorPermission
 from comments.serializers import CommentSerializer
-from issues.permissions import IsAuthor
-from issues.views import IssueViewSet
+from projects.permissions import IsAuthor
 
 
 class CommentViewSet(viewsets.ModelViewSet):
@@ -18,7 +20,10 @@ class CommentViewSet(viewsets.ModelViewSet):
 
     queryset = Comment.objects.all()
     serializer_class = CommentSerializer
-    permission_classes = [IsAuthenticated, IsAuthenticatedOrReadOnly, ]
+    permission_classes = [
+        IsAuthenticated,
+        IsAuthenticatedOrReadOnly,
+    ]
 
     # http_method_names = ["get", "put", "patch", "delete"]
     # permission_classes = [IsAuthenticated, IsCreationAndIsStaff, ContributorPermission]

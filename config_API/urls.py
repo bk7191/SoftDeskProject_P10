@@ -8,7 +8,7 @@ from rest_framework_simplejwt.views import (
     TokenVerifyView,
 )
 
-from authentication.views import CustomUserViewSet
+from authentication.views import CustomUserViewSet, CustomUserSignupViewSet
 from comments.views import CommentViewSet
 from issues.views import IssueViewSet
 from projects.views import ProjectViewSet, ContributorViewSet
@@ -16,6 +16,7 @@ from rest_framework_nested import routers
 
 # Routers provide an easy way of automatically determining the URL conf.
 router = routers.DefaultRouter()
+router.register(r"signup", CustomUserSignupViewSet, basename="signup")
 router.register(r"users", CustomUserViewSet, basename="users")
 router.register(r"projects", ProjectViewSet, basename="projects")
 
@@ -34,11 +35,10 @@ urlpatterns = [
     path("api-auth/", include("rest_framework.urls")),
     path("api/token/", TokenObtainPairView.as_view(), name="token_obtain_pair"),
     path("api/token/refresh/", TokenRefreshView.as_view(), name="token_refresh"),
-    path('api/token/verify/', TokenVerifyView.as_view(), name='token_verify'),
+    path("api/token/verify/", TokenVerifyView.as_view(), name="token_verify"),
     path("api/", include(router.urls)),
     path("api/", include(projects_router.urls)),
     path("api/", include(issues_router.urls)),
-
 ]
 
 """ router.register(r"api/users", CustomUserViewSet, basename="users")
