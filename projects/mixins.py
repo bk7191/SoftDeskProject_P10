@@ -19,7 +19,7 @@ class RecordInterestView(SingleObjectMixin, View):
         # Actually record interest somehow here!
 
         return HttpResponseRedirect(
-            reverse("author-detail", kwargs={"pk": self.object.pk})
+            reverse("author", kwargs={"pk": self.object.pk})
         )
 
 
