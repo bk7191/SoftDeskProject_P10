@@ -16,17 +16,13 @@ from projects.serializers import (
 from projects.mixins import *
 
 
-class ProjectViewSet(viewsets.ModelViewSet, GetDetailSerializerClassMixin):
+class ProjectViewSet(viewsets.ModelViewSet, GetDetailSerializerClassMixin, RecordInterestView):
     queryset = Project.objects.all()
     serializer_class = ProjectSerializer
 
     # http_method_names = ["get", "post", "head", "patch", "delete"]
 
     permission_classes = [IsAuthenticated, IsAuthenticatedOrReadOnly, ContributorPermission]
-
-    def get_view_name(self):
-        pass
-
 
     def update(self, request, *args, **kwargs):
         kwargs["partial"] = True
