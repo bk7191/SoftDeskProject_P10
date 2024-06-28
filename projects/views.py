@@ -35,6 +35,8 @@ class ProjectViewSet(viewsets.ModelViewSet, GetDetailSerializerClassMixin, Recor
 
 
 class ContributorViewSet(viewsets.ModelViewSet, GetDetailSerializerClassMixin):
+    authentication_classes = [JWTAuthentication]
+
     queryset = Contributor.objects.all()
 
     detail_serializer_class = ContributorDetailSerializer

@@ -3,6 +3,7 @@ from rest_framework import viewsets, status
 from rest_framework.generics import get_object_or_404
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
+from rest_framework_simplejwt.authentication import JWTAuthentication
 
 import issues.serializers
 import projects
@@ -20,6 +21,7 @@ class IssueViewSet(viewsets.ModelViewSet):
     class Issue réservée aux utilisateurs connectes et authentifiés
 
     """
+    authentication_classes = [JWTAuthentication]
 
     queryset = Issue.objects.all()
     serializer_class = IssueSerializer

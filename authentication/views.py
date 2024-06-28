@@ -1,15 +1,18 @@
 from rest_framework import viewsets
 from rest_framework.filters import SearchFilter
 from rest_framework.permissions import IsAuthenticated
-
+from rest_framework.views import APIView
 from .models import CustomUser
-
+from rest_framework_simplejwt.authentication import JWTAuthentication
+from rest_framework.response import Response
 # from .serializers import CustomUserSerializer, GroupSerializer,
 from .permissions import IsOwnerOrReadOnly, IsAdminAuthenticated, IsCreationAndIsStaff
 from .serializers import CustomUserSerializer
 
 
 class CustomUserViewSet(viewsets.ModelViewSet):
+    authentication_classes = [JWTAuthentication]
+
     queryset = CustomUser.objects.all()
     serializer_class = CustomUserSerializer
     # permission_classes = [IsTheUser, ]
@@ -21,6 +24,8 @@ class CustomUserViewSet(viewsets.ModelViewSet):
 
 
 class CustomUserDetailViewSet(viewsets.ModelViewSet):
+    authentication_classes = [JWTAuthentication]
+
     queryset = CustomUser.objects.all()
     serializer_class = CustomUserSerializer
     # permission_classes = [IsTheUser, ]
@@ -32,6 +37,8 @@ class CustomUserDetailViewSet(viewsets.ModelViewSet):
 
 
 class CustomUserSignupViewSet(viewsets.ModelViewSet):
+    authentication_classes = [JWTAuthentication]
+
     queryset = CustomUser.objects.all()
     serializer_class = CustomUserSerializer
     # permission_classes = [IsAuthenticated]
@@ -39,3 +46,12 @@ class CustomUserSignupViewSet(viewsets.ModelViewSet):
     search_fields = [
         "username",
     ]
+
+
+class Home(APIView):
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request, format=None):
+        content = {"message": "Hello, World!"}
+        return Response(content)

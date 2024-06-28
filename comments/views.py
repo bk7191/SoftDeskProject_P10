@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from rest_framework import viewsets
 from rest_framework.permissions import IsAuthenticated
+from rest_framework_simplejwt.authentication import JWTAuthentication
 
 from authentication.permissions import (
     IsCreationAndIsStaff,
@@ -17,6 +18,7 @@ class CommentViewSet(viewsets.ModelViewSet):
     class Issue réservée aux utilistateurs connectes et authentifiés
 
     """
+    authentication_classes = [JWTAuthentication]
 
     queryset = Comment.objects.all()
     serializer_class = CommentSerializer

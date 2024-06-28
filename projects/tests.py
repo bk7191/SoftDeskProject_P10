@@ -53,37 +53,37 @@ class ProjectTests(TestCase):
     def setUp(self):
         self.client = APIClient()
         self.project_data = {
-            "title": "Test Project",
-            "description": "This is a test project",
-            "github_link": "https://github.com/test-user/test-project",
-            "image_link": "https://example.com/test-project-image.jpg",
-            "demo_link": "https://example.com/test-project-demo",
-            "categories": ["category1", "category2"],
-            "owner": "test-user",
+            "name": "est Project",
+            "description": "This is a new test project",
+            # "project_type": "https://github.com/test-user/new-test-project",
+            # "image_link": "https://example.com/new-test-project-image.jpg",
+            # "demo_link": "https://example.com/new-test-project-demo",
+            "project_type": "front-end",
+            "author": "test-user",
         }
         self.create_project()
 
     def create_project(self):
-        response = self.client.post(reverse("project-list"), self.project_data)
+        response = self.client.post(reverse("projects"), self.project_data)
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
 
     def test_get_projects(self):
-        response = self.client.get(reverse("project-list"))
+        response = self.client.get(reverse("projects"))
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
     def test_get_project(self):
-        response = self.client.get(reverse("project-detail", kwargs={"pk": 1}))
+        response = self.client.get(reverse("projects", kwargs={"pk": 1}))
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
     def test_create_project(self):
         new_project_data = {
-            "title": "New Test Project",
+            "name": "New Test Project",
             "description": "This is a new test project",
-            "github_link": "https://github.com/test-user/new-test-project",
-            "image_link": "https://example.com/new-test-project-image.jpg",
-            "demo_link": "https://example.com/new-test-project-demo",
-            "categories": ["category1", "category2"],
-            "owner": "test-user",
+            # "project_type": "https://github.com/test-user/new-test-project",
+            # "image_link": "https://example.com/new-test-project-image.jpg",
+            # "demo_link": "https://example.com/new-test-project-demo",
+            "project_type": "back-end",
+            "author": "test-user",
         }
         response = self.client.post(reverse("project-list"), new_project_data)
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)

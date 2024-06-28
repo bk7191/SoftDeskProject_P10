@@ -8,7 +8,7 @@ from rest_framework_simplejwt.views import (
     TokenVerifyView,
 )
 
-from authentication.views import CustomUserViewSet, CustomUserSignupViewSet
+from authentication.views import CustomUserViewSet, CustomUserSignupViewSet, Home
 from comments.views import CommentViewSet
 from issues.views import IssueViewSet
 from projects.views import ProjectViewSet, ContributorViewSet
@@ -30,6 +30,7 @@ issues_router.register(r"comments", CommentViewSet, basename="comments")
 
 urlpatterns = [
     path("admin/", admin.site.urls),
+    path("", Home.as_view(), name="home"),
     path("login/", LoginView.as_view(redirect_authenticated_user=True), name="login"),
     path("logout/", LogoutView.as_view(next_page="login"), name="logout"),
     path("api-auth/", include("rest_framework.urls")),

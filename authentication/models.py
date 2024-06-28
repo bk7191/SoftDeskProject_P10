@@ -22,6 +22,9 @@ class CustomUser(AbstractUser):
     # updated_time pour information update
     updated_time = models.DateTimeField(auto_now=True)
 
+    def __str__(self):
+        return self.username
+
     @property
     def age(self):
         if not self.date_of_birth:
