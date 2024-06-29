@@ -69,10 +69,12 @@ class SignupViewPermissions(BasePermission):
 
 
 class IsAuthor(BasePermission):
-    # Read permissions are allowed to any request,
-    # so we'll always allow GET, HEAD or OPTIONS requests.
+    # Allow any author to edit,
+    # Assumes the model instance has an 'author' attribute.
 
     def has_object_permission(self, request, view, obj):
+        if request.method in permissions.SAFE_METHODS:
+            return True
         return obj.author == request.user
 
 

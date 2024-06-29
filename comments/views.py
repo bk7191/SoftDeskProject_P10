@@ -25,6 +25,7 @@ class CommentViewSet(viewsets.ModelViewSet):
     permission_classes = [
         IsAuthenticated,
         IsAuthenticatedOrReadOnly,
+        IsAuthor
     ]
 
     # http_method_names = ["get", "put", "patch", "delete"]

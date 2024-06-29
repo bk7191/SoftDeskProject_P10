@@ -50,7 +50,8 @@ class CustomUserSignupViewSet(viewsets.ModelViewSet):
 
 class Home(APIView):
     authentication_classes = [JWTAuthentication]
-    permission_classes = [IsAuthenticated]
+
+    # permission_classes = [IsAuthenticated]
 
     def get(self, request, format=None):
         content = {"message": "Hello, World!"}
