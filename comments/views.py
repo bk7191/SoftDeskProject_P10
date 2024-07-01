@@ -18,7 +18,7 @@ class CommentViewSet(viewsets.ModelViewSet):
     class Issue réservée aux utilistateurs connectes et authentifiés
 
     """
-    authentication_classes = [JWTAuthentication]
+    # authentication_classes = [JWTAuthentication]
 
     queryset = Comment.objects.all()
     serializer_class = CommentSerializer

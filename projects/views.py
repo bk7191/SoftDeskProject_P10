@@ -25,7 +25,7 @@ class AdminProjectsViewSet(MultipleSerializerMixin, ModelViewSet):
 
 # class ProjectViewSet(ModelViewSet, GetDetailSerializerClassMixin, RecordInterestView):
 class ProjectViewSet(ModelViewSet, MultipleSerializerMixin):
-    authentication_classes = [JWTAuthentication]
+    # authentication_classes = [JWTAuthentication]
     queryset = Project.objects.all()
     serializer_class = ProjectSerializer
     detail_serializer_class = ContributorDetailSerializer
@@ -42,7 +42,7 @@ class ProjectViewSet(ModelViewSet, MultipleSerializerMixin):
 
 
 class ContributorViewSet(viewsets.ModelViewSet, GetDetailSerializerClassMixin):
-    authentication_classes = [JWTAuthentication]
+    # authentication_classes = [JWTAuthentication]
 
     queryset = Contributor.objects.all()
 
