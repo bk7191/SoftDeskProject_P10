@@ -1,6 +1,7 @@
 from rest_framework import status, viewsets, request
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
+from rest_framework.viewsets import ModelViewSet
 
 import projects
 import projects.serializers
@@ -15,6 +16,15 @@ from projects.serializers import (
     ContributorSerializer,
 )
 from projects.mixins import *
+
+
+class AdminProjectsViewSet(MultipleSerializerMixin, ModelViewSet):
+    serializer_class = ProjectSerializer
+    detail_serializer_class = ProjectSerializer
+    permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+        return Project.objects.all()
 
 
 class ProjectViewSet(viewsets.ModelViewSet, GetDetailSerializerClassMixin, RecordInterestView):

@@ -102,9 +102,3 @@
 #     def test_delete_project(self):
 #         response = self.client.delete(reverse("project-detail", kwargs={"pk": 1}))
 #         self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
-from rest_framework.test import APIClient, CoreAPIClient
-from requests.auth import HTTPBasicAuth
-
-client = CoreAPIClient()
-client.session.auth = HTTPBasicAuth("user", "pass")
-client.session.headers.update({"x-test": "true"})

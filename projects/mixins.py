@@ -3,6 +3,7 @@ from django.urls import reverse
 from django.views import View
 from django.views.generic.detail import SingleObjectMixin
 from projects.models import Contributor
+from rest_framework.decorators import action
 
 
 class RecordInterestView(SingleObjectMixin, View):
@@ -21,6 +22,15 @@ class RecordInterestView(SingleObjectMixin, View):
         return HttpResponseRedirect(
             reverse("author", kwargs={"pk": self.object.pk})
         )
+
+
+class MultipleSerializerMixin:
+    detail_serializer_class = None
+
+    def get_serializer_class(self):
+        if self.action == 'retrieve' and self.detail_serializer_class is not None:
+            return self.detail_serializer_class
+        return super().get_serializer_class()
 
 
 class GetDetailSerializerClassMixin:
