@@ -1,3 +1,4 @@
+from rest_framework import serializers
 from rest_framework.serializers import ModelSerializer
 
 from .models import CustomUser
@@ -17,6 +18,8 @@ class CustomUserSerializer(ModelSerializer):
 
 
 class CustomUserDetailedSerializer(ModelSerializer):
+    user = CustomUser.objects.all()
+
     class Meta(CustomUserSerializer.Meta):
         fields = CustomUserSerializer.Meta.fields + [
             "first_name",
@@ -49,3 +52,7 @@ class CustomUserDetailedSerializer(ModelSerializer):
         )
         instance.save()
         return instance
+
+    def validate_birth_date(self, user, value):
+        if user.age(value) < 15:
+            raise serializers.ValidationError("Pas l'âge requis")
