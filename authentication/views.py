@@ -1,4 +1,7 @@
-from rest_framework import viewsets
+from django.contrib.auth import authenticate
+from django.utils.decorators import method_decorator
+from django.views.decorators.csrf import csrf_exempt
+from rest_framework import viewsets, status
 from rest_framework.filters import SearchFilter
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.views import APIView
@@ -8,6 +11,7 @@ from rest_framework.response import Response
 # from .serializers import CustomUserSerializer, GroupSerializer,
 from .permissions import IsOwnerOrReadOnly, IsAdminAuthenticated, IsCreationAndIsStaff
 from .serializers import CustomUserSerializer, CustomUserDetailedSerializer
+from rest_framework_simplejwt.tokens import Token
 
 
 class CustomUserViewSet(viewsets.ModelViewSet):
@@ -47,7 +51,7 @@ class UserViewSet(viewsets.ModelViewSet):
 # permission_classes = [IsAuthenticated, IsOwnerOrReadOnly, IsCreationAndIsStaff]
 # permission_classes = [IsAdminAuthenticated]
 
-
+@method_decorator(csrf_exempt, name='dispatch')
 class CustomUserSignupViewSet(viewsets.ModelViewSet):
     authentication_classes = [JWTAuthentication]
 
@@ -59,6 +63,16 @@ class CustomUserSignupViewSet(viewsets.ModelViewSet):
         "username",
     ]
 
+    def post(self, request, *args, **kwargs):
+        username = request.data.get("username")
+        password = request.data.get('password')
+        user = authenticate(username=username, password=password)
+        if user is not None:
+            token, created = Token.objects.get_or_create(user=user)
+            print(token.key)
+            return Response({'token': token.key}, status=status.HTTP_200_OK)
+        else:
+            return Response({'error': 'Invalids credentials'}, status=status.HTTP_400_BAD_REQUEST)
 
 class Home(APIView):
     authentication_classes = [JWTAuthentication]
