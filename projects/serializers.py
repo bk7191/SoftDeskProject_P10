@@ -97,3 +97,9 @@ class ContributorDetailSerializer(serializers.ModelSerializer):
 
     def perform_create(self, serializer):
         serializer.save()
+
+
+class ProjectDetailSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Project.author
+        fields = "__all__"
