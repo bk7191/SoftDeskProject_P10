@@ -9,7 +9,7 @@ https://docs.djangoproject.com/en/2.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/2.1/ref/settings/
 """
-
+import datetime
 import os
 import posixpath
 from datetime import timedelta
@@ -127,6 +127,12 @@ SIMPLE_JWT = {
     #     "rest_framework_simplejwt.authentication."
     #     "default_user_authentication_rule"
     # ),
+}
+JWT_AUTH = {
+    'JWT_VERIFY': True,
+    'JWT_VERIFY_EXPIRATION': True,
+    'JWT_EXPIRATION_DELTA': datetime.timedelta(minutes=15),
+    'JWT_AUTH_HEADER_PREFIX': 'Bearer',
 }
 # Template configuration
 # https://docs.djangoproject.com/en/2.1/topics/templates/

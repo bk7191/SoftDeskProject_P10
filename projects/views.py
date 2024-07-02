@@ -8,7 +8,7 @@ import projects.serializers
 from authentication.permissions import *
 from projects.models import *
 from authentication.serializers import *
-from projects.permissions import IsProjectContributorAuthenticated, IsContributor, CanManageProjectContributors
+from projects.permissions import *
 from rest_framework_simplejwt.authentication import JWTAuthentication
 from projects.serializers import *
 from projects.mixins import *
@@ -30,7 +30,7 @@ class ProjectViewSet(ModelViewSet, MultipleSerializerMixin):
     serializer_class = ProjectSerializer
     detail_serializer_class = ContributorDetailSerializer
     # http_method_names = ["get", "post", "head", "patch", "delete"]
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated | IsContributor | IsAuthor]
 
     def get(self, request):
         return Response({'message': 'Authenticated'})
