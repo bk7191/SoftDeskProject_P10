@@ -51,7 +51,6 @@ class UserViewSet(viewsets.ModelViewSet):
 # permission_classes = [IsAuthenticated, IsOwnerOrReadOnly, IsCreationAndIsStaff]
 # permission_classes = [IsAdminAuthenticated]
 
-@method_decorator(csrf_exempt, name='dispatch')
 class CustomUserSignupViewSet(viewsets.ModelViewSet):
     authentication_classes = [JWTAuthentication]
 
