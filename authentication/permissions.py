@@ -15,7 +15,7 @@ class IsOwnerOrReadOnly(BasePermission):
         )
 
 
-# definit permission pour utilisateurs authentifies
+# definit permission pour admin authentifies
 class IsAdminAuthenticated(BasePermission):
     def has_permission(self, request, view):
         return bool(
