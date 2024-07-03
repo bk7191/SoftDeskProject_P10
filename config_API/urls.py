@@ -23,7 +23,7 @@ router.register(r"projects", ProjectViewSet, basename="projects")
 projects_router = routers.NestedSimpleRouter(router, r"projects", lookup="project")
 projects_router.register(r"issues", IssueViewSet, basename="issues")
 
-projects_router.register(r'admin_projects', AdminProjectsViewSet, basename="administration")
+router.register(r'admin_projects', AdminProjectsViewSet, basename="administration")
 
 projects_router.register(r"contributors", ContributorViewSet, basename="contributors")
 
