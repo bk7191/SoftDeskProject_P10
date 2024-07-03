@@ -67,5 +67,5 @@ class Home(APIView):
     # permission_classes = [IsAuthenticated]
 
     def get(self, request, format=None):
-        content = {"message": "Hello, World!"}
+        content = {"message": "Hello, Bienvenue dans SoftDeskApi!"}
         return Response(content)

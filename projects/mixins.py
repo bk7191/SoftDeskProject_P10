@@ -2,8 +2,11 @@ from django.http import HttpResponseForbidden, HttpResponseRedirect
 from django.urls import reverse
 from django.views import View
 from django.views.generic.detail import SingleObjectMixin
+
+from authentication.permissions import IsStaffPermission
 from projects.models import Contributor
 from rest_framework.decorators import action
+from rest_framework import permissions
 
 
 class RecordInterestView(SingleObjectMixin, View):
@@ -47,3 +50,7 @@ class GetDetailSerializerClassMixin:
         ):
             return self.detail_serializer_class
         return super().get_serializer_class()
+
+
+class StaffEditorPermissionsMixin():
+    permissions_classes = [permissions.IsAdminUser, IsStaffPermission]

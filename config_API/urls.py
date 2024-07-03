@@ -11,7 +11,7 @@ from rest_framework_simplejwt.views import (
 from authentication.views import CustomUserViewSet, CustomUserSignupViewSet, Home
 from comments.views import CommentViewSet
 from issues.views import IssueViewSet
-from projects.views import ProjectViewSet, ContributorViewSet
+from projects.views import ProjectViewSet, ContributorViewSet, AdminProjectsViewSet
 from rest_framework_nested import routers
 
 # Routers provide an easy way of automatically determining the URL conf.
@@ -22,6 +22,8 @@ router.register(r"projects", ProjectViewSet, basename="projects")
 
 projects_router = routers.NestedSimpleRouter(router, r"projects", lookup="project")
 projects_router.register(r"issues", IssueViewSet, basename="issues")
+
+projects_router.register(r'admin_projects', AdminProjectsViewSet, basename="administration")
 
 projects_router.register(r"contributors", ContributorViewSet, basename="contributors")
 
