@@ -25,12 +25,13 @@ class AdminProjectsViewSet(MultipleSerializerMixin, ModelViewSet):
 
 # class ProjectViewSet(ModelViewSet, GetDetailSerializerClassMixin, RecordInterestView):
 class ProjectViewSet(ModelViewSet, MultipleSerializerMixin):
-    authentication_classes = [JWTAuthentication]
+    # authentication_classes = [JWTAuthentication]
     queryset = Project.objects.all()
     serializer_class = ProjectSerializer
     detail_serializer_class = ContributorDetailSerializer
     # http_method_names = ["get", "post", "head", "patch", "delete"]
-    permission_classes = [IsAuthenticated | IsContributor | IsAuthor]
+    # permission_classes = [IsAuthenticated | IsContributor | IsAuthor]
+    permission_classes = [IsAuthenticated, IsAuthor, IsProjectContributorAuthenticated]
 
     def get(self, request):
         return Response({'message': 'Authenticated'})
