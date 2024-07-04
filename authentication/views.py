@@ -52,7 +52,6 @@ class CustomUserSignupViewSet(viewsets.ModelViewSet):
 
         username = request.data.get("username")
         password = request.data.get('password')
-        age = queryset.age(date_of_birth)
         user = authenticate(username=username, password=password)
         if user is not None:
 
@@ -62,6 +61,10 @@ class CustomUserSignupViewSet(viewsets.ModelViewSet):
         else:
             return Response({'error': 'Invalids credentials'}, status=status.HTTP_400_BAD_REQUEST)
 
+    # def list(self,request):
+    #     user = CustomUser.objects.get(username=request.user)
+    #     user_data = CustomUserSerializer(user).data
+    #     return Response(user_data)
 
 class Home(APIView):
     authentication_classes = [JWTAuthentication]

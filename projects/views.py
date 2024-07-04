@@ -17,7 +17,7 @@ from projects.mixins import *
 class AdminProjectsViewSet(MultipleSerializerMixin, StaffEditorPermissionsMixin, ModelViewSet):
     serializer_class = ProjectSerializer
     detail_serializer_class = [ProjectDetailSerializer | ContributorDetailSerializer]
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsAdminAuthenticated]
 
     def get_queryset(self):
         return Project.objects.all()
