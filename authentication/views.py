@@ -52,8 +52,10 @@ class CustomUserSignupViewSet(viewsets.ModelViewSet):
 
         username = request.data.get("username")
         password = request.data.get('password')
+        age = queryset.age(date_of_birth)
         user = authenticate(username=username, password=password)
         if user is not None:
+
             token, created = authentication_classes.objects.get_or_create(username=user)
             print(token.key)
             return Response({'token': token.key}, status=status.HTTP_201_CREATED)

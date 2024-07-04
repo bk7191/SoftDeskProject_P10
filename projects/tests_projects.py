@@ -1,13 +1,24 @@
 # import unittest
 # from django.conf import settings
 # from django.urls import reverse
-# from django.test import TestCase
+from django.test import TestCase
 # from rest_framework.test import APIClient
 # from rest_framework import status
-# from authentication.models import CustomUser
+from authentication.models import CustomUser
+from projects.models import Project
+from issues.models import Issue
+from comments.models import Comment
+from datetime import datetime
 # from authentication.views import CustomUserViewSet
 # from authentication.serializers import CustomUserSerializer
 #
+class TestProjects(TestCase):
+    def test_create_project(self):
+        nbr_of_projects_before_add = Project.objects.count()
+        print(nbr_of_projects_before_add)
+        nbr_of_projects_after_add = Project.objects.count()
+        print(nbr_of_projects_after_add)
+
 #
 # class TestCustomUserViewSet(TestCase):
 #     def setUp(self):
