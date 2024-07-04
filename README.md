@@ -82,7 +82,7 @@ L'application permet de remonter et suivre des problèmes techniques (issue trac
 
 * #### "api/users": "http://127.0.0.1:8000/api/users/",
 * #### "api/projects": "http://127.0.0.1:8000/api/projects/",
-* #### "api/issue": "http://127.0.0.1:8000/api/issue/",
-* #### "api/comments": "http://127.0.0.1:8000/api/comments/",
-* #### "api/contributor": "http://127.0.0.1:8000/api/contributor/",
+* #### "api/issue": "http://127.0.0.1:8000/api/projects/pk/issues/",
+* #### "api/comments": "http://127.0.0.1:8000/api/projects/pk/issues/",
+* #### "api/contributor": "http://127.0.0.1:8000/api/projects/pk/contributor/",
 * #### "signup": "http://127.0.0.1:8000/signup/"
