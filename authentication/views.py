@@ -32,9 +32,6 @@ class CustomUserViewSet(viewsets.ModelViewSet):
         return CustomUserSerializer
 
 
-
-
-
 class CustomUserSignupViewSet(viewsets.ModelViewSet):
     # print(authentication_classes)
     queryset = CustomUser.objects.all()
@@ -63,6 +60,7 @@ class CustomUserSignupViewSet(viewsets.ModelViewSet):
         user = CustomUser.objects.get(username=request.user)
         user_data = CustomUserSerializer(user).data
         return Response(user_data)
+
 
 class Home(APIView):
     authentication_classes = [JWTAuthentication]
