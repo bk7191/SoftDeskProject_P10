@@ -9,10 +9,21 @@ from projects.models import Project
 from issues.models import Issue
 from comments.models import Comment
 from datetime import datetime
+
+
 # from authentication.views import CustomUserViewSet
 # from authentication.serializers import CustomUserSerializer
 #
 class TestProjects(TestCase):
+    CHOICE_PROJECT = "back-end"
+
+    def setUp(self):
+        self.project_List = Project()
+        self.project_List.name = "Projet 1"
+        self.project_List.description = "desc. proj. 1"
+        self.project_List.project_type = self.CHOICE_PROJECT
+        self.project_List.author = "1"
+
     def test_create_project(self):
         nbr_of_projects_before_add = Project.objects.count()
         print(nbr_of_projects_before_add)

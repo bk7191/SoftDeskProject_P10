@@ -45,8 +45,9 @@ INSTALLED_APPS = [
     "rest_framework",
 
     "rest_framework_simplejwt",
+    'drf_yasg',
     # 'oauth2_provider',
-    "config_API",
+    # "config_API",
     "authentication.apps.AuthenticationConfig",
     "projects.apps.ProjectsConfig",
     "issues.apps.IssuesConfig",

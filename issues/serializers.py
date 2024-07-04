@@ -21,3 +21,4 @@ class IssueSerializer(serializers.ModelSerializer):
         validated_data["assignee"] = CustomUser.objects.filter(pk=assignee_id).first()
         validated_data["created_by"] = self.context["request"].user
         return super().create(validated_data)
+

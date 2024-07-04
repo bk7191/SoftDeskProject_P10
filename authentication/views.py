@@ -1,14 +1,14 @@
 from django.contrib.auth import authenticate
 from rest_framework import viewsets, status
 from rest_framework.filters import SearchFilter
-from rest_framework.permissions import IsAdminUser
+from rest_framework.permissions import IsAdminUser, IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework_simplejwt.authentication import JWTAuthentication
 from rest_framework_simplejwt.tokens import Token
-
+from drf_yasg.utils import swagger_auto_schema
 from .models import CustomUser
-from .permissions import IsAdminAuthenticated
+from .permissions import IsAdminAuthenticated, IsCreationAndIsStaff, IsOwnerOrReadOnly
 from .serializers import CustomUserSerializer, CustomUserDetailedSerializer
 
 
@@ -17,24 +17,22 @@ class CustomUserViewSet(viewsets.ModelViewSet):
 
     queryset = CustomUser.objects.all()
     serializer_class = [CustomUserDetailedSerializer]
-    # permission_classes = [IsTheUser, ]
+    permission_classes = [IsCreationAndIsStaff | IsAdminUser]
     # permission_classes = [IsAuthenticated | IsCreationAndIsStaff | IsOwnerOrReadOnly]
     filter_backends = [SearchFilter]
     search_fields = ["username"]
 
+    @swagger_auto_schema(
+        operation_description='This method return the user object (current user)',
+        responses={200: CustomUserSerializer}
+    )
     def get_serializer_class(self):
         if self.action == 'retrieve':
             return CustomUserDetailedSerializer
         return CustomUserSerializer
 
 
-class UserViewSet(viewsets.ModelViewSet):
-    # permission_classes = [IsAuthenticated | IsCreationAndIsStaff | IsOwnerOrReadOnly]
 
-    def get_serializer_class(self):
-        if self.request.contributor.is_staff:
-            return UserPrivateSerializer
-        return UserPublicSerializer
 
 
 class CustomUserSignupViewSet(viewsets.ModelViewSet):
@@ -61,10 +59,10 @@ class CustomUserSignupViewSet(viewsets.ModelViewSet):
         else:
             return Response({'error': 'Invalids credentials'}, status=status.HTTP_400_BAD_REQUEST)
 
-    # def list(self,request):
-    #     user = CustomUser.objects.get(username=request.user)
-    #     user_data = CustomUserSerializer(user).data
-    #     return Response(user_data)
+    def list(self, request):
+        user = CustomUser.objects.get(username=request.user)
+        user_data = CustomUserSerializer(user).data
+        return Response(user_data)
 
 class Home(APIView):
     authentication_classes = [JWTAuthentication]
