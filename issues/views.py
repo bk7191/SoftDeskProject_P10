@@ -1,19 +1,7 @@
-from django.shortcuts import render
-from rest_framework import viewsets, status
-from rest_framework.viewsets import ReadOnlyModelViewSet
-from rest_framework.permissions import AllowAny, IsAuthenticated
-from rest_framework.response import Response
-from rest_framework_simplejwt.authentication import JWTAuthentication
+from rest_framework import viewsets
 
-import issues.serializers
-import projects
-from authentication.permissions import IsCreationAndIsStaff, IsAuthenticatedOrReadOnly
-from comments.permissions import ContributorPermission
-from projects.permissions import IsContributor, IsAuthor
-from issues.serializers import IssueSerializer
 from issues.models import Issue
-from projects.models import Project
-from projects.serializers import ProjectAuthorSimpleSerializer
+from issues.serializers import IssueSerializer
 
 
 class IssueViewSet(viewsets.ModelViewSet):
@@ -21,6 +9,7 @@ class IssueViewSet(viewsets.ModelViewSet):
     class Issue réservée aux utilisateurs connectes et authentifiés
 
     """
+
     # authentication_classes = [JWTAuthentication]
 
     queryset = Issue.objects.all()

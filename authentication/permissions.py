@@ -29,10 +29,7 @@ class ContributorPermission(BasePermission):
     """
 
     def has_object_permission(self, request, view, obj):
-        return Contributor.objects.filter(
-            project=obj,
-            user=request.user
-        ).exists()
+        return Contributor.objects.filter(project=obj, user=request.user).exists()
 
 
 class IsCreationAndIsStaff(BasePermission):
@@ -73,11 +70,11 @@ class IsStaffPermission(permissions.DjangoModelPermissions):
         return super().has_permission(request, view)
 
     perms_map = {
-        'GET': ['%(app_label)s.view_%(model_name)s'],
-        'OPTIONS': [],
-        'HEAD': [],
-        'POST': ['%(app_label)s.add_%(model_name)s'],
-        'PUT': ['%(app_label)s.change_%(model_name)s'],
-        'PATCH': ['%(app_label)s.change_%(model_name)s'],
-        'DELETE': ['%(app_label)s.delete_%(model_name)s'],
+        "GET": ["%(app_label)s.view_%(model_name)s"],
+        "OPTIONS": [],
+        "HEAD": [],
+        "POST": ["%(app_label)s.add_%(model_name)s"],
+        "PUT": ["%(app_label)s.change_%(model_name)s"],
+        "PATCH": ["%(app_label)s.change_%(model_name)s"],
+        "DELETE": ["%(app_label)s.delete_%(model_name)s"],
     }

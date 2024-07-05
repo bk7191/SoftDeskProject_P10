@@ -58,7 +58,8 @@ class ProjectSerializer(serializers.ModelSerializer):
 
     def get_contributors(self, contributeurs):
         contributeurs_list = Project.objects.filter(
-            Q(user=request.user, contributeurs=contributeurs))
+            Q(user=request.user, contributeurs=contributeurs)
+        )
         return contributeurs_list
 
     def perform_update(self, serializer):

@@ -23,11 +23,11 @@ class CustomUserViewSet(viewsets.ModelViewSet):
     search_fields = ["username"]
 
     @swagger_auto_schema(
-        operation_description='This method return the user object (current user)',
-        responses={200: CustomUserSerializer}
+        operation_description="This method return the user object (current user)",
+        responses={200: CustomUserSerializer},
     )
     def get_serializer_class(self):
-        if self.action == 'retrieve':
+        if self.action == "retrieve":
             return CustomUserDetailedSerializer
         return CustomUserSerializer
 
@@ -46,15 +46,17 @@ class CustomUserSignupViewSet(viewsets.ModelViewSet):
         authentication_classes = [JWTAuthentication]
 
         username = request.data.get("username")
-        password = request.data.get('password')
+        password = request.data.get("password")
         user = authenticate(username=username, password=password)
         if user is not None:
 
             token, created = authentication_classes.objects.get_or_create(username=user)
             print(token.key)
-            return Response({'token': token.key}, status=status.HTTP_201_CREATED)
+            return Response({"token": token.key}, status=status.HTTP_201_CREATED)
         else:
-            return Response({'error': 'Invalids credentials'}, status=status.HTTP_400_BAD_REQUEST)
+            return Response(
+                {"error": "Invalids credentials"}, status=status.HTTP_400_BAD_REQUEST
+            )
 
     def list(self, request):
         user = CustomUser.objects.get(username=request.user)
@@ -68,5 +70,5 @@ class Home(APIView):
     # permission_classes = [IsAuthenticated]
 
     def get(self, request, format=None):
-        content = {"message": "Hello, Bienvenue dans SoftDeskApi!"}
+        content = {"message": "Hello, Bienvenue dans SoftDeskApi_postman!"}
         return Response(content)

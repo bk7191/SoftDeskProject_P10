@@ -14,7 +14,9 @@ from projects.serializers import *
 from projects.mixins import *
 
 
-class AdminProjectsViewSet(MultipleSerializerMixin, StaffEditorPermissionsMixin, ModelViewSet):
+class AdminProjectsViewSet(
+    MultipleSerializerMixin, StaffEditorPermissionsMixin, ModelViewSet
+):
     serializer_class = ProjectSerializer
     detail_serializer_class = [ProjectDetailSerializer | ContributorDetailSerializer]
     permission_classes = [IsAdminAuthenticated]
@@ -34,7 +36,7 @@ class ProjectViewSet(ModelViewSet, MultipleSerializerMixin):
     permission_classes = [IsAuthenticated, IsAuthor, IsProjectContributorAuthenticated]
 
     def get(self, request):
-        return Response({'message': 'Authenticated'})
+        return Response({"message": "Authenticated"})
 
     def update(self, request, *args, **kwargs):
         kwargs["partial"] = True

@@ -18,15 +18,12 @@ class CommentViewSet(viewsets.ModelViewSet):
     class Issue réservée aux utilistateurs connectes et authentifiés
 
     """
+
     # authentication_classes = [JWTAuthentication]
 
     queryset = Comment.objects.all()
     serializer_class = CommentSerializer
-    permission_classes = [
-        IsAuthenticated,
-        IsAuthenticatedOrReadOnly,
-        IsAuthor
-    ]
+    permission_classes = [IsAuthenticated, IsAuthenticatedOrReadOnly, IsAuthor]
 
     # http_method_names = ["get", "put", "patch", "delete"]
     # permission_classes = [IsAuthenticated, IsCreationAndIsStaff, ContributorPermission]

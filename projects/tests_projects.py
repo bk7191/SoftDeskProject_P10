@@ -1,14 +1,28 @@
 # import unittest
-# from django.conf import settings
-# from django.urls import reverse
+from config_API import settings
+import pytest
 from django.test import TestCase
+from django.urls import reverse
+from pytest_drf import APIViewTest, Returns200, UsesGetMethod
+
 # from rest_framework.test import APIClient
 # from rest_framework import status
-from authentication.models import CustomUser
 from projects.models import Project
-from issues.models import Issue
-from comments.models import Comment
-from datetime import datetime
+
+
+class TestHelloWorld(
+    APIViewTest,
+    UsesGetMethod,
+    Returns200,
+):
+    @pytest.fixture
+    def url(self):
+        return reverse("")
+
+    def test_it_returns_hello_world(self, json):
+        expected = "Hello, World!"
+        actual = json
+        assert expected == actual
 
 
 # from authentication.views import CustomUserViewSet

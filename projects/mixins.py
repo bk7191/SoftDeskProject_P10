@@ -22,16 +22,14 @@ class RecordInterestView(SingleObjectMixin, View):
         self.object = self.get_object()
         # Actually record interest somehow here!
 
-        return HttpResponseRedirect(
-            reverse("author", kwargs={"pk": self.object.pk})
-        )
+        return HttpResponseRedirect(reverse("author", kwargs={"pk": self.object.pk}))
 
 
 class MultipleSerializerMixin:
     detail_serializer_class = None
 
     def get_serializer_class(self):
-        if self.action == 'retrieve' and self.detail_serializer_class is not None:
+        if self.action == "retrieve" and self.detail_serializer_class is not None:
             return self.detail_serializer_class
         return super().get_serializer_class()
 
@@ -52,5 +50,5 @@ class GetDetailSerializerClassMixin:
         return super().get_serializer_class()
 
 
-class StaffEditorPermissionsMixin():
+class StaffEditorPermissionsMixin:
     permissions_classes = [permissions.IsAdminUser, IsStaffPermission]
