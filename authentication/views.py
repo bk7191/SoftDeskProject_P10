@@ -8,7 +8,12 @@ from rest_framework_simplejwt.authentication import JWTAuthentication
 from rest_framework_simplejwt.tokens import Token
 from drf_yasg.utils import swagger_auto_schema
 from .models import CustomUser
-from .permissions import IsAdminAuthenticated, IsCreationAndIsStaff, IsOwnerOrReadOnly, IsStaffPermission
+from .permissions import (
+    IsAdminAuthenticated,
+    IsCreationAndIsStaff,
+    IsOwnerOrReadOnly,
+    IsStaffPermission,
+)
 from .serializers import CustomUserSerializer, CustomUserDetailedSerializer
 
 
