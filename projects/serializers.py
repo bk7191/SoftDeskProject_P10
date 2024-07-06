@@ -78,14 +78,14 @@ class ProjectSerializer(serializers.ModelSerializer):
         ]
 
 
-class ProjectAuthorSerializer(serializers.ModelSerializer):
+class ProjectDetailSerializer(serializers.ModelSerializer):
     class Meta:
         model = Project.author
         fields = "__all__"
 
 
 class ProjectAuthorSimpleSerializer(serializers.ModelSerializer):
-    author_obj = ProjectAuthorSerializer(source="author", read_only=True)
+    author_obj = ProjectDetailSerializer(source="author", read_only=True)
 
     class Meta(ProjectSerializer.Meta):
         model = Project
@@ -99,9 +99,3 @@ class ContributorDetailSerializer(serializers.ModelSerializer):
 
     def perform_create(self, serializer):
         serializer.save()
-
-
-class ProjectDetailSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Project.author
-        fields = "__all__"

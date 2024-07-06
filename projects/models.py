@@ -29,9 +29,7 @@ class Project(models.Model):
         return self.name
 
     def save(self, *args, **kwargs):
-        super(Project, self).save(*args, **kwargs)
-        if not self.author.filter(pk=self.author.pk).exists():
-            self.author.add(self.author)
+        return super(Project, self).save(*args, **kwargs)
 
 
 class Contributor(models.Model):
