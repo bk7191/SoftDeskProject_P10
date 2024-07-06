@@ -3,6 +3,7 @@ from rest_framework import serializers, request
 
 import projects
 from authentication.models import CustomUser
+from authentication.serializers import CustomUserSerializer
 from .models import Project, Contributor
 
 
@@ -46,7 +47,7 @@ class ProjectSerializer(serializers.ModelSerializer):
     sérialisation à partir des champs du modèle.
 
     """
-
+    user = CustomUserSerializer
     author = serializers.PrimaryKeyRelatedField(read_only=True)
     # contributor = serializers.PrimaryKeyRelatedField(queryset=CustomUser.objects.all(), many=True, required=True)
     contributeurs = ContributorSerializer(many=True, read_only=True)
@@ -58,7 +59,7 @@ class ProjectSerializer(serializers.ModelSerializer):
 
     def get_contributors(self, contributeurs):
         contributeurs_list = Project.objects.filter(
-            Q(user=request.user, contributeurs=contributeurs)
+            Q(user=author, contributeurs=contributeurs)
         )
         return contributeurs_list
 
@@ -86,7 +87,7 @@ class ProjectAuthorSerializer(serializers.ModelSerializer):
 class ProjectAuthorSimpleSerializer(serializers.ModelSerializer):
     author_obj = ProjectAuthorSerializer(source="author", read_only=True)
 
-    class Meta:
+    class Meta(ProjectSerializer.Meta):
         model = Project
         fields = "__all__"
 

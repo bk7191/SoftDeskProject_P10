@@ -198,6 +198,6 @@ CORS_ALLOW_CREDENTIALS = True
 ACCOUNT_LOGOUT_ON_GET = True
 
 SWAGGER_SETTINGS = {
-    'LOGIN_URL': '/admin/login/',
-    'LOGOUT_URL': '/admin/logout/'
+    'LOGIN_URL': '/api-auth/login/',
+    'LOGOUT_URL': '/api/#'
 }
