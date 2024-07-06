@@ -193,11 +193,11 @@ AUTH_USER_MODEL = "authentication.CustomUser"
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:4200",
 ]
-#
-# CORS_ALLOW_CREDENTIALS = True
-# ACCOUNT_LOGOUT_ON_GET = True
-#
-# SWAGGER_SETTINGS = {
-#     'LOGIN_URL': '/api-auth/login/',
-#     'LOGOUT_URL': '/api/#'
-# }
+
+CORS_ALLOW_CREDENTIALS = True
+ACCOUNT_LOGOUT_ON_GET = True
+
+SWAGGER_SETTINGS = {
+    'LOGIN_URL': '/api-auth/login/',
+    'LOGOUT_URL': '/api/#'
+}
