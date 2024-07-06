@@ -190,14 +190,14 @@ STATIC_ROOT = posixpath.join(*(BASE_DIR.split(os.path.sep) + ["static"]))
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 AUTH_USER_MODEL = "authentication.CustomUser"
 
-CORS_ALLOWED_ORIGINS = [
-    "http://localhost:4200",
-]
-
-CORS_ALLOW_CREDENTIALS = True
-ACCOUNT_LOGOUT_ON_GET = True
-
-SWAGGER_SETTINGS = {
-    'LOGIN_URL': '/api-auth/login/',
-    'LOGOUT_URL': '/api/#'
-}
+# CORS_ALLOWED_ORIGINS = [
+#     "http://localhost:4200",
+# ]
+#
+# CORS_ALLOW_CREDENTIALS = True
+# ACCOUNT_LOGOUT_ON_GET = True
+#
+# SWAGGER_SETTINGS = {
+#     'LOGIN_URL': '/api-auth/login/',
+#     'LOGOUT_URL': '/api/#'
+# }

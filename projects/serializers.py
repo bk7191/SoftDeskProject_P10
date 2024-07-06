@@ -47,14 +47,13 @@ class ProjectSerializer(serializers.ModelSerializer):
     sérialisation à partir des champs du modèle.
 
     """
-    user = CustomUserSerializer
-    author = serializers.PrimaryKeyRelatedField(read_only=True)
+    author = CustomUserSerializer(read_only=True)
     # contributor = serializers.PrimaryKeyRelatedField(queryset=CustomUser.objects.all(), many=True, required=True)
     contributeurs = ContributorSerializer(many=True, read_only=True)
 
     def create(self, validated_data):
         author = self.context["request"].user
-        validated_data["author"] = author.username
+        validated_data["author"] = author
         return super().create(validated_data)
 
     def get_contributors(self, contributeurs):
