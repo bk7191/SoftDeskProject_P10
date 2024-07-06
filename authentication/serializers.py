@@ -56,3 +56,4 @@ class CustomUserDetailedSerializer(ModelSerializer):
     def validate_birth_date(self, user, value):
         if user.age(value) < 15:
             raise serializers.ValidationError("Pas l'âge requis")
+

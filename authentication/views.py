@@ -8,7 +8,7 @@ from rest_framework_simplejwt.authentication import JWTAuthentication
 from rest_framework_simplejwt.tokens import Token
 from drf_yasg.utils import swagger_auto_schema
 from .models import CustomUser
-from .permissions import IsAdminAuthenticated, IsCreationAndIsStaff, IsOwnerOrReadOnly
+from .permissions import IsAdminAuthenticated, IsCreationAndIsStaff, IsOwnerOrReadOnly, IsStaffPermission
 from .serializers import CustomUserSerializer, CustomUserDetailedSerializer
 
 
@@ -36,7 +36,8 @@ class CustomUserSignupViewSet(viewsets.ModelViewSet):
     # print(authentication_classes)
     queryset = CustomUser.objects.all()
     serializer_class = CustomUserDetailedSerializer
-    permission_classes = [IsAdminAuthenticated]
+    permissions_classes = [IsStaffPermission]
+
     filter_backends = [SearchFilter]
     search_fields = [
         "username",
@@ -59,6 +60,7 @@ class CustomUserSignupViewSet(viewsets.ModelViewSet):
             )
 
     def list(self, request):
+        # liste request.users si request.user est enregistré
         user = CustomUser.objects.get(username=request.user)
         user_data = CustomUserSerializer(user).data
         return Response(user_data)
@@ -70,5 +72,5 @@ class Home(APIView):
     # permission_classes = [IsAuthenticated]
 
     def get(self, request, format=None):
-        content = {"message": "Hello, Bienvenue dans SoftDeskApi_postman!"}
+        content = {"message": "Hello, Bienvenue dans SoftDeskApi!"}
         return Response(content)

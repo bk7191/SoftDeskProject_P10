@@ -11,7 +11,7 @@ class IsOwnerOrReadOnly(BasePermission):
 
     def has_permission(self, request, view):
         return bool(
-            request.user and request.user.is_authenticated and request.user.is_staff
+            request.user or request.user.is_authenticated or request.user.is_staff
         )
 
 
@@ -55,6 +55,8 @@ class IsCreationAndIsStaff(BasePermission):
 
 class IsAuthenticatedOrReadOnly(BasePermission):
     def has_permission(self, request, view):
+        if not request.user.is_staff:
+            return True
         return bool(
             request.method in SAFE_METHODS
             or request.user
@@ -66,7 +68,7 @@ class IsStaffPermission(permissions.DjangoModelPermissions):
 
     def has_permission(self, request, view):
         if not request.user.is_staff:
-            return False
+            return True
         return super().has_permission(request, view)
 
     perms_map = {

@@ -33,7 +33,7 @@ class ProjectViewSet(ModelViewSet, MultipleSerializerMixin):
     detail_serializer_class = ContributorDetailSerializer
     # http_method_names = ["get", "post", "head", "patch", "delete"]
     # permission_classes = [IsAuthenticated | IsContributor | IsAuthor]
-    permission_classes = [IsAuthenticated, IsAuthor, IsProjectContributorAuthenticated]
+    permission_classes = [IsProjectContributorAuthenticated]
 
     def get(self, request):
         return Response({"message": "Authenticated"})

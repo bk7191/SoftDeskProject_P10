@@ -39,8 +39,6 @@ router.register(r"projects", ProjectViewSet, basename="projects")
 projects_router = routers.NestedSimpleRouter(router, r"projects", lookup="project")
 projects_router.register(r"issues", IssueViewSet, basename="issues")
 
-router.register(r'admin_projects', AdminProjectsViewSet, basename="administration")
-
 projects_router.register(r"contributors", ContributorViewSet, basename="contributors")
 
 issues_router = routers.NestedSimpleRouter(projects_router, r"issues", lookup="issue")
