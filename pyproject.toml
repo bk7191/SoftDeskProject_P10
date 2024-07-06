@@ -13,9 +13,6 @@ djangorestframework-simplejwt = "^5.3.1"
 flake8-html = "^0.4.3"
 drf-nested-routers = "^0.94.1"
 
-[tool.poetry.group.dev.dependencies]
-black = "^24.4.2"
-
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"

@@ -29,7 +29,7 @@ class AdminProjectsViewSet(
 class ProjectViewSet(ModelViewSet, MultipleSerializerMixin):
     # authentication_classes = [JWTAuthentication]
     queryset = Project.objects.all()
-    serializer_class = ProjectAuthorSimpleSerializer
+    serializer_class = ProjectSerializer
     detail_serializer_class = ContributorDetailSerializer
     # http_method_names = ["get", "post", "head", "patch", "delete"]
     # permission_classes = [IsAuthenticated | IsContributor | IsAuthor]
