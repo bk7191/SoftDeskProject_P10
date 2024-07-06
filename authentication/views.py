@@ -22,7 +22,7 @@ class CustomUserViewSet(viewsets.ModelViewSet):
 
     queryset = CustomUser.objects.all()
     serializer_class = [CustomUserDetailedSerializer]
-    permission_classes = [IsCreationAndIsStaff | IsAdminUser]
+    permission_classes = [IsCreationAndIsStaff | IsAdminAuthenticated]
     # permission_classes = [IsAuthenticated | IsCreationAndIsStaff | IsOwnerOrReadOnly]
     filter_backends = [SearchFilter]
     search_fields = ["username"]
@@ -41,7 +41,7 @@ class CustomUserSignupViewSet(viewsets.ModelViewSet):
     # print(authentication_classes)
     queryset = CustomUser.objects.all()
     serializer_class = CustomUserDetailedSerializer
-    permissions_classes = [IsStaffPermission]
+    # permissions_classes = [IsStaffPermission]
 
     filter_backends = [SearchFilter]
     search_fields = [

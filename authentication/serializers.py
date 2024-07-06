@@ -31,6 +31,13 @@ class CustomUserDetailedSerializer(ModelSerializer):
             "can_data_be_shared",
         ]
 
+    def validate_age(self, date_of_birth):
+        authorized_age = 16
+        age = date_of_birth.age()
+        if age < authorized_age:
+            raise serializers.ValidationError(f'{authorized_age} requis svp')
+        return date_of_birth
+
     def create(self, validated_data):
         user = CustomUser.objects.create_user(**validated_data)
         return user
@@ -38,9 +45,6 @@ class CustomUserDetailedSerializer(ModelSerializer):
     def update(self, instance, validated_data):
         instance.username = validated_data.get("username", instance.username)
         instance.email = validated_data.get("email", instance.email)
-        instance.date_of_birth = validated_data.get(
-            "date_of_birth", instance.date_of_birth
-        )
         instance.consent_choice = validated_data.get(
             "consent_choice", instance.consent_choice
         )
@@ -52,7 +56,3 @@ class CustomUserDetailedSerializer(ModelSerializer):
         )
         instance.save()
         return instance
-
-    def validate_birth_date(self, user, value):
-        if user.age(value) < 15:
-            raise serializers.ValidationError("Pas l'âge requis")

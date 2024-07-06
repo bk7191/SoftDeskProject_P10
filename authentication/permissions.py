@@ -40,7 +40,7 @@ class IsCreationAndIsStaff(BasePermission):
                 or request.method == "PATCH"
         ):
             return (
-                    request.user and request.user.is_staff and request.user.is_authenticated
+                    request.user and request.user.is_authenticated
             )
         return True
 
