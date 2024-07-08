@@ -25,21 +25,22 @@ class CustomUserDetailedSerializer(ModelSerializer):
             "first_name",
             "last_name",
             "email",
-            "date_of_birth",
+            "age",
             "consent_choice",
             "can_be_contacted",
             "can_data_be_shared",
         ]
 
-    def validate_age(self, date_of_birth):
+    def validate_age(self, age):
         authorized_age = 16
-        age = date_of_birth.age()
-        if age < authorized_age:
-            raise serializers.ValidationError(f'{authorized_age} requis svp')
-        return date_of_birth
+        if int(age) < authorized_age:
+            raise serializers.ValidationError(f'{authorized_age} ans requis svp')
+        return age
 
     def create(self, validated_data):
         user = CustomUser.objects.create_user(**validated_data)
+        print("user de serializer", user)
+
         return user
 
     def update(self, instance, validated_data):

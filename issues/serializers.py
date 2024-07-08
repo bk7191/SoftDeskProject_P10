@@ -2,7 +2,7 @@ from rest_framework import serializers
 
 from authentication.models import CustomUser
 from authentication.serializers import CustomUserSerializer
-from .models import Issue
+from .models import Issue, Project
 
 
 class IssueSerializer(serializers.ModelSerializer):
@@ -17,6 +17,11 @@ class IssueSerializer(serializers.ModelSerializer):
         depth = 2
 
     def create(self, validated_data):
+        projet_id = self.context['view'].kwargs.get('project_pk')
+        projet = Project.objects.filter(pk=projet_id).first()
+        # projet_id = self.context['projects_pk']
+        validated_data['project'] = projet
+
         assignee_id = validated_data.pop("assignee_id")
         validated_data["assignee"] = CustomUser.objects.filter(pk=assignee_id).first()
         validated_data["created_by"] = self.context["request"].user

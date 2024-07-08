@@ -13,7 +13,7 @@ class CustomUser(AbstractUser):
     password = models.CharField(max_length=255, blank=False)
     email = models.CharField(max_length=255, blank=False)
     # Attributs RGPD
-    date_of_birth = models.DateField(null=True, blank=True)
+    age = models.CharField(max_length=2, blank=False, default=False)
     consent_choice = models.BooleanField(default=False)
     can_be_contacted = models.BooleanField(default=False)
     can_data_be_shared = models.BooleanField(default=False)
@@ -24,17 +24,3 @@ class CustomUser(AbstractUser):
 
     def __str__(self):
         return self.username
-
-    @property
-    def age(self):
-        if not self.date_of_birth:
-            return None
-        today = date.today()
-        return (
-                today.year
-                - self.date_of_birth.year
-                - (
-                        (today.month, today.day)
-                        < (self.date_of_birth.month, self.date_of_birth.day)
-                )
-        )

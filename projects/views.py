@@ -41,6 +41,8 @@ class ProjectViewSet(ModelViewSet, MultipleSerializerMixin):
     def update(self, request, *args, **kwargs):
         kwargs["partial"] = True
         author_queryset = projects.serializers.ContributorSerializer
+        print(author_queryset)
+
         return super().update(request, author_queryset, *kwargs)
 
 

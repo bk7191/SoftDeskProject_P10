@@ -7,6 +7,9 @@ from rest_framework.views import APIView
 from rest_framework_simplejwt.authentication import JWTAuthentication
 from rest_framework_simplejwt.tokens import Token
 from drf_yasg.utils import swagger_auto_schema
+
+import authentication.models
+from projects.mixins import MultipleSerializerMixin, GetDetailSerializerClassMixin
 from .models import CustomUser
 from .permissions import (
     IsAdminAuthenticated,
@@ -40,21 +43,40 @@ class CustomUserViewSet(viewsets.ModelViewSet):
 class CustomUserSignupViewSet(viewsets.ModelViewSet):
     # print(authentication_classes)
     queryset = CustomUser.objects.all()
-    serializer_class = CustomUserDetailedSerializer
-    # permissions_classes = [IsStaffPermission]
+    serializer_class = CustomUserSerializer
+    detail_serializer_class = CustomUserDetailedSerializer
+    permissions_classes = [IsAuthenticated]
 
     filter_backends = [SearchFilter]
     search_fields = [
         "username",
     ]
 
+    def get_serializer_class(self):
+        serializer_class = CustomUserSerializer
+
+        if self.action in ["list", 'get', 'retrieve', 'update', 'partial_update', 'destroy']:
+            return serializer_class
+
+        return self.detail_serializer_class
+
+    def get_permissions(self):
+        if self.action == "list" or self.action == 'get':
+            self.permissions_classes = [IsAdminAuthenticated]
+            return self.permissions_classes
+
+        return super().get_permissions()
+
     def post(self, request, *args, **kwargs):
         authentication_classes = [JWTAuthentication]
-
+        age = request.data.get("age")
         username = request.data.get("username")
         password = request.data.get("password")
         user = authenticate(username=username, password=password)
-        if user is not None:
+        print(age)
+        print("user de viewset", user)
+        if user is not None and age:
+            print(age)
 
             token, created = authentication_classes.objects.get_or_create(username=user)
             print(token.key)
@@ -64,9 +86,9 @@ class CustomUserSignupViewSet(viewsets.ModelViewSet):
                 {"error": "Invalids credentials"}, status=status.HTTP_400_BAD_REQUEST
             )
 
-    def list(self, request):
+    def get(self, request):
         # liste request.users si request.user est enregistré
-        user = CustomUser.objects.get(username=request.user)
+        user = CustomUser.objects.get(username=request.username)
         user_data = CustomUserSerializer(user).data
         return Response(user_data)
 

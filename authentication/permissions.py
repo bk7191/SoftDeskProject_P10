@@ -17,6 +17,8 @@ class IsOwnerOrReadOnly(BasePermission):
 
 # definit permission pour admin authentifies
 class IsAdminAuthenticated(BasePermission):
+    message = "You must be super admin to perform requested operation"
+
     def has_permission(self, request, view):
         return bool(
             request.user and request.user.is_authenticated and request.user.is_superuser
