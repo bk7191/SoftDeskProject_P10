@@ -24,8 +24,9 @@ class CustomUserViewSet(viewsets.ModelViewSet):
     # authentication_classes = [JWTAuthentication]
 
     queryset = CustomUser.objects.all()
-    serializer_class = [CustomUserDetailedSerializer]
-    permission_classes = [IsCreationAndIsStaff | IsAdminAuthenticated]
+    serializer_class = CustomUserSerializer
+    detail_serializer_class = CustomUserDetailedSerializer
+    permission_classes = [IsAuthenticated | IsAdminAuthenticated]
     # permission_classes = [IsAuthenticated | IsCreationAndIsStaff | IsOwnerOrReadOnly]
     filter_backends = [SearchFilter]
     search_fields = ["username"]
@@ -35,7 +36,7 @@ class CustomUserViewSet(viewsets.ModelViewSet):
         responses={200: CustomUserSerializer},
     )
     def get_serializer_class(self):
-        if self.action == "retrieve":
+        if self.action in ["retrieve", "put", 'get'] and self.permission_classes == 'IsAdminAuthenticated':
             return CustomUserDetailedSerializer
         return CustomUserSerializer
 

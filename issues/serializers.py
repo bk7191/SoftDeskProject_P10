@@ -5,7 +5,8 @@ from authentication.serializers import CustomUserSerializer
 from .models import Issue, Project
 
 
-class IssueSerializer(serializers.ModelSerializer):
+class \
+        IssueSerializer(serializers.ModelSerializer):
     assignee_id = serializers.IntegerField(write_only=True)
     assignee = CustomUserSerializer(many=False, read_only=True)
 

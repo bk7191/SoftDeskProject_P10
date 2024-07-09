@@ -1,5 +1,6 @@
 from rest_framework import serializers
 
+from authentication.models import CustomUser
 from issues.serializers import IssueSerializer
 from projects.models import Project
 from .models import Comment
