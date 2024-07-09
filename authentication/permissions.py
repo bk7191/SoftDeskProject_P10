@@ -8,6 +8,8 @@ class IsOwnerOrReadOnly(BasePermission):
     """
     Custom permission to only allow owners of an object to edit it.
     """
+    user = Contributor.user
+    view = ""
 
     def has_permission(self, request, view):
         return bool(

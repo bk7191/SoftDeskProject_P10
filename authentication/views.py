@@ -1,7 +1,7 @@
 from django.contrib.auth import authenticate
-from rest_framework import viewsets, status
+from rest_framework import viewsets, status, generics
 from rest_framework.filters import SearchFilter
-from rest_framework.permissions import IsAdminUser, IsAuthenticated
+from rest_framework.permissions import IsAdminUser, IsAuthenticated, AllowAny
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework_simplejwt.authentication import JWTAuthentication
@@ -15,7 +15,7 @@ from .permissions import (
     IsAdminAuthenticated,
     IsCreationAndIsStaff,
     IsOwnerOrReadOnly,
-    IsStaffPermission,
+    IsStaffPermission, ContributorPermission,
 )
 from .serializers import CustomUserSerializer, CustomUserDetailedSerializer
 
@@ -40,7 +40,14 @@ class CustomUserViewSet(viewsets.ModelViewSet):
         return CustomUserSerializer
 
 
-class CustomUserSignupViewSet(viewsets.ModelViewSet):
+class CreateUserView(generics.CreateAPIView):
+    queryset = CustomUser.objects.all()
+    serializer_class = CustomUserSerializer
+    detail_serializer_class = CustomUserDetailedSerializer
+    permissions_classes = [AllowAny]
+
+
+class CustomUserSignupViewSet(viewsets.ModelViewSet, GetDetailSerializerClassMixin):
     # print(authentication_classes)
     queryset = CustomUser.objects.all()
     serializer_class = CustomUserSerializer

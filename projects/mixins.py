@@ -28,6 +28,9 @@ class RecordInterestView(SingleObjectMixin, View):
 class MultipleSerializerMixin:
     detail_serializer_class = None
 
+    def __init__(self):
+        self.action = None
+
     def get_serializer_class(self):
         if self.action == "retrieve" and self.detail_serializer_class is not None:
             return self.detail_serializer_class
@@ -38,6 +41,9 @@ class GetDetailSerializerClassMixin:
     """
     Get detail serializer class
     """
+
+    def __init__(self):
+        self.detail_serializer_class = None
 
     def get_serializer_class(self):
         if (

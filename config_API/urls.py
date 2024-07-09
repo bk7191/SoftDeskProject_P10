@@ -1,9 +1,7 @@
 from django.contrib import admin
 from django.contrib.auth.views import LogoutView, LoginView
 from django.urls import path, include
-from rest_framework import routers
 from rest_framework import permissions
-
 from drf_yasg import openapi
 from drf_yasg.views import get_schema_view
 from rest_framework_simplejwt.views import (
@@ -11,9 +9,9 @@ from rest_framework_simplejwt.views import (
     TokenRefreshView,
     TokenVerifyView,
 )
-from authentication.views import CustomUserViewSet, CustomUserSignupViewSet, Home
+from authentication.views import CustomUserViewSet, CreateUserView, CustomUserSignupViewSet, Home
 from comments.views import CommentViewSet
-from issues.views import IssueViewSet
+from issues.views import IssueViewSet, IssueReadOnlyViewSet
 from projects.views import ProjectViewSet, ContributorViewSet
 from rest_framework_nested import routers
 
@@ -49,9 +47,11 @@ urlpatterns = [
     path("", Home.as_view(), name="home"),
     path("login/", LoginView.as_view(redirect_authenticated_user=True), name="login"),
     path("logout/", LogoutView.as_view(next_page="login"), name="logout"),
+    path("api/users/register/", CreateUserView.as_view(), name="register"),
+
     path("api-auth/", include("rest_framework.urls")),
     path("api/token/", TokenObtainPairView.as_view(), name="token_obtain_pair"),
-    path("api/token/refresh/", TokenRefreshView.as_view(), name="token_refresh"),
+    path("api/token/refresh/", TokenRefreshView.as_view, name="token_refresh"),
     path("api/token/verify/", TokenVerifyView.as_view(), name="token_verify"),
     path("api/", include(router.urls)),
     path("api/", include(projects_router.urls)),

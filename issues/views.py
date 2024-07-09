@@ -1,7 +1,10 @@
 from rest_framework import viewsets
+from rest_framework.viewsets import ReadOnlyModelViewSet
 
 from issues.models import Issue
 from issues.serializers import IssueSerializer
+from projects.models import Project
+from projects.serializers import ProjectAuthorSimpleSerializer
 
 
 class IssueViewSet(viewsets.ModelViewSet):
@@ -19,8 +22,10 @@ class IssueViewSet(viewsets.ModelViewSet):
     # permission_classes = [IsAuthenticated, IsCreationAndIsStaff, IsContributor]
     http_method_names = ["get", "post", "head", "patch", "delete"]
 
-# class IssueViewSet(ReadOnlyModelViewSet):
-#     serializer_class = ProjectAuthorSimpleSerializer
-#
-#     def get_queryset(self):
-#         return Project.objects.all()
+
+class IssueReadOnlyViewSet(ReadOnlyModelViewSet):
+    serializer_class = ProjectAuthorSimpleSerializer
+
+    class Meta(IssueViewSet):
+        def get_queryset(self):
+            return Project.objects.all()

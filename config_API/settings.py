@@ -43,7 +43,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     # Add your apps here to enable them
     "rest_framework",
-
+    'corsheaders',
     "rest_framework_simplejwt",
     'drf_yasg',
     # 'oauth2_provider',
@@ -64,6 +64,7 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    "corsheaders.middleware.CorsMiddleware",
     # 'oauth2_provider.middleware.OAuth2TokenMiddleware',
 ]
 
@@ -190,13 +191,13 @@ STATIC_ROOT = posixpath.join(*(BASE_DIR.split(os.path.sep) + ["static"]))
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 AUTH_USER_MODEL = "authentication.CustomUser"
 
-# CORS_ALLOWED_ORIGINS = [
-#     "http://localhost:4200",
-# ]
-#
-# CORS_ALLOW_CREDENTIALS = True
-# ACCOUNT_LOGOUT_ON_GET = True
-#
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:4200",
+]
+
+CORS_ALLOW_CREDENTIALS = True
+ACCOUNT_LOGOUT_ON_GET = True
+
 SWAGGER_SETTINGS = {
     'LOGIN_URL': '/api-auth/login/',
     'LOGOUT_URL': '/api/#'
