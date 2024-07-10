@@ -4,6 +4,7 @@ from rest_framework.filters import SearchFilter
 from rest_framework.permissions import IsAdminUser, IsAuthenticated, AllowAny
 from rest_framework.response import Response
 from rest_framework.views import APIView
+from rest_framework.decorators import action
 from rest_framework_simplejwt.authentication import JWTAuthentication
 from rest_framework_simplejwt.tokens import Token
 from drf_yasg.utils import swagger_auto_schema
@@ -47,11 +48,7 @@ class CreateUserView(generics.CreateAPIView):
     detail_serializer_class = CustomUserDetailedSerializer
     permissions_classes = [AllowAny]
 
-    def __init__(self, **kwargs):
-        super().__init__(kwargs)
-        self.action = None
-
-    def get_serializer_class(self, user=None):
+    def get_serializer_class(self):
         user = CustomUser
         if self.action == "post":
             return CustomUserDetailedSerializer(user=user)
@@ -64,7 +61,7 @@ class CustomUserSignupViewSet(viewsets.ModelViewSet, GetDetailSerializerClassMix
     queryset = CustomUser.objects.all()
     serializer_class = CustomUserSerializer
     detail_serializer_class = CustomUserDetailedSerializer
-    permissions_classes = [IsAuthenticated]
+    permissions_classes = [AllowAny]
 
     filter_backends = [SearchFilter]
     search_fields = [
