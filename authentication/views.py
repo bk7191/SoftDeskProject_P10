@@ -47,6 +47,17 @@ class CreateUserView(generics.CreateAPIView):
     detail_serializer_class = CustomUserDetailedSerializer
     permissions_classes = [AllowAny]
 
+    def __init__(self, **kwargs):
+        super().__init__(kwargs)
+        self.action = None
+
+    def get_serializer_class(self, user=None):
+        user = CustomUser
+        if self.action == "post":
+            return CustomUserDetailedSerializer(user=user)
+
+        return CustomUserSerializer
+
 
 class CustomUserSignupViewSet(viewsets.ModelViewSet, GetDetailSerializerClassMixin):
     # print(authentication_classes)

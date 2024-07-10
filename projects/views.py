@@ -6,6 +6,8 @@ from rest_framework.viewsets import ModelViewSet
 import projects
 import projects.serializers
 from authentication.permissions import *
+from comments.serializers import CommentSerializer
+from issues.serializers import IssueSerializer
 from projects.models import *
 from authentication.serializers import *
 from projects.permissions import *
@@ -31,14 +33,16 @@ class ProjectViewSet(ModelViewSet, MultipleSerializerMixin):
     queryset = Project.objects.all()
     serializer_class = ProjectSerializer
     detail_serializer_class = ContributorDetailSerializer
-    # http_method_names = ["get", "post", "head", "patch", "delete"]
+    issue_serializer_class = IssueSerializer
+    comments_serializer_class = CommentSerializer
+    http_method_names = ["get", "post", "put", "delete"]
     # permission_classes = [IsAuthenticated | IsContributor | IsAuthor]
     permission_classes = [IsAuthenticated]
 
     def get(self, request):
         return Response({"message": "Authenticated"})
 
-    def update(self, request, *args, **kwargs):
+    def put(self, request, *args, **kwargs):
         kwargs["partial"] = True
         author_queryset = projects.serializers.ContributorSerializer
         print(author_queryset)

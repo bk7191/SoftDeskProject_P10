@@ -45,7 +45,7 @@ issues_router.register(r"comments", CommentViewSet, basename="comments")
 
 urlpatterns = [
     path("admin/", admin.site.urls),
-    # path("", Home.as_view(), name="home"),
+    path("", Home.as_view(), name="home"),
     path("login/", LoginView.as_view(redirect_authenticated_user=True), name="login"),
     path("logout/", LogoutView.as_view(next_page="login"), name="logout"),
     path("api/users/register/", CreateUserView.as_view(), name="register"),
