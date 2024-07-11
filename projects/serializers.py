@@ -1,6 +1,7 @@
 from django.db.models import Q
 from rest_framework import serializers, request
 
+import comments
 import projects
 from authentication.models import CustomUser
 from authentication.serializers import CustomUserSerializer
@@ -58,7 +59,7 @@ class ProjectSerializer(serializers.ModelSerializer):
 
     def get_contributors(self, contributeurs):
         contributeurs_list = Project.objects.filter(
-            Q(user=author, contributeurs=contributeurs)
+            Q(user=user, contributeurs=contributeurs)
         )
         return contributeurs_list
 

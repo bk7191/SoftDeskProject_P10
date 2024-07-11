@@ -51,10 +51,6 @@ class DisplayProjectMixin:
         return self.serializer_class.comment_serializer_class(*args, **kwargs)
 
 
-
-
-
-# class ProjectViewSet(ModelViewSet, GetDetailSerializerClassMixin, RecordInterestView):
 class ProjectViewSet(ModelViewSet, MultipleSerializerMixin):
     # authentication_classes = [JWTAuthentication]
     queryset = Project.objects.all()
@@ -66,19 +62,21 @@ class ProjectViewSet(ModelViewSet, MultipleSerializerMixin):
     # permission_classes = [IsAuthenticated | IsContributor | IsAuthor]
     permission_classes = [IsAuthenticated]
 
-    # def get(self, request):
-    #     return Response({"message": "Authenticated"})
-    #
-    # def put(self, request, *args, **kwargs):
-    #     kwargs["partial"] = True
-    #     author_queryset = projects.ContributorSerializer
-    #     print(author_queryset)
-    #
-    #     return super().update(request, author_queryset, *kwargs)
+    def get(self, request):
+        return Response({"message": "Authenticated"})
+
+    def put(self, request, *args, **kwargs):
+        kwargs["partial"] = True
+        author_queryset = Project.objects.filter(author_id=self.request.user.id)
+        print(author_queryset)
+        author_queryset.save()
+
+        return super().update(request, author_queryset, *kwargs)
+
     def get_serializer_class(self):
         if self.action in ['retrieve', 'update', 'partial_update']:
-            return IssueSerializer
-        return ProjectSerializer
+            return ProjectSerializer
+
 
     def update(self, request, *args, **kwargs):
         partial = kwargs.pop('partial', False)
@@ -91,6 +89,7 @@ class ProjectViewSet(ModelViewSet, MultipleSerializerMixin):
             instance._prefetched_objects_cache = {}
 
         return Response(serializer.data)
+
 
 class ContributorViewSet(viewsets.ModelViewSet, GetDetailSerializerClassMixin):
     # authentication_classes = [JWTAuthentication]
