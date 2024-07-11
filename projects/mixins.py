@@ -41,9 +41,10 @@ class GetDetailSerializerClassMixin:
     """
     Get detail serializer class
     """
-
+    detail_serializer_class = None
     def __init__(self):
-        self.detail_serializer_class = None
+        self.action = None
+
 
     def get_serializer_class(self):
         if (
