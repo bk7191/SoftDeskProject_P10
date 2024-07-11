@@ -27,7 +27,7 @@ class CustomUserViewSet(viewsets.ModelViewSet):
     queryset = CustomUser.objects.all()
     serializer_class = CustomUserSerializer
     detail_serializer_class = CustomUserDetailedSerializer
-    permission_classes = [IsAuthenticated | IsAdminAuthenticated]
+    permission_classes = [IsStaffPermission]
     # permission_classes = [IsAuthenticated | IsCreationAndIsStaff | IsOwnerOrReadOnly]
     filter_backends = [SearchFilter]
     search_fields = ["username"]
@@ -76,31 +76,35 @@ class CustomUserSignupViewSet(viewsets.ModelViewSet, GetDetailSerializerClassMix
 
         return self.detail_serializer_class
 
-    def get_permissions(self):
-        if self.action == "list" or self.action == 'get':
-            self.permissions_classes = [IsAdminAuthenticated]
-            return self.permissions_classes
+    # def get_permissions(self):
+    #     print('step 1')
+    #
+    #     if self.action == "list" or self.action == 'get':
+    #         print('step 2')
+    #         self.permissions_classes = [IsAdminAuthenticated]
+    #         return self.permissions_classes
+    #     print('step 3')
+    #
+    #     return self.permissions_classes
 
-        return super().get_permissions()
-
-    def post(self, request, *args, **kwargs):
-        authentication_classes = [JWTAuthentication]
-        age = request.data.get("age")
-        username = request.data.get("username")
-        password = request.data.get("password")
-        user = authenticate(username=username, password=password)
-        print(age)
-        print("user de viewset", user)
-        if user is not None and age:
-            print(age)
-
-            token, created = authentication_classes.objects.get_or_create(username=user)
-            print(token.key)
-            return Response({"token": token.key}, status=status.HTTP_201_CREATED)
-        else:
-            return Response(
-                {"error": "Invalids credentials"}, status=status.HTTP_400_BAD_REQUEST
-            )
+    # def post(self, request, *args, **kwargs):
+    #     authentication_classes = [JWTAuthentication]
+    #     age = request.data.get("age")
+    #     username = request.data.get("username")
+    #     password = request.data.get("password")
+    #     user = authenticate(username=username, password=password)
+    #     print(age)
+    #     print("user de viewset", user)
+    #     if user is not None and age:
+    #         print(age)
+    #
+    #         token, created = authentication_classes.objects.get_or_create(username=user)
+    #         print(token.key)
+    #         return Response({"token": token.key}, status=status.HTTP_201_CREATED)
+    #     else:
+    #         return Response(
+    #             {"error": "Invalids credentials"}, status=status.HTTP_400_BAD_REQUEST
+    #         )
 
     def get(self, request):
         # liste request.users si request.user est enregistré

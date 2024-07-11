@@ -34,7 +34,8 @@ router = routers.DefaultRouter()
 
 router.register(r"users", CustomUserViewSet, basename="users")
 router.register(r"projects", ProjectViewSet, basename="projects")
-router.register(r"users/register", CustomUserSignupViewSet, basename="register")
+# registered= routers.NestedSimpleRouter(router, r'register', lookup='register-user')
+router.register(r"enregister", CustomUserSignupViewSet, basename="enregister")
 
 projects_router = routers.NestedSimpleRouter(router, r"projects", lookup="project")
 projects_router.register(r"issues", IssueViewSet, basename="issues")
@@ -49,7 +50,7 @@ urlpatterns = [
     path("", Home.as_view(), name="home"),
     path("login/", LoginView.as_view(redirect_authenticated_user=True), name="login"),
     path("logout/", LogoutView.as_view(next_page="login"), name="logout"),
-
+    # path('api/internal/register', CreateUserView.as_view(),name='register'),
     path("api-auth/", include("rest_framework.urls")),
     path("api/token/", TokenObtainPairView.as_view(), name="token_obtain_pair"),
     path("api/token/refresh/", TokenRefreshView.as_view, name="token_refresh"),

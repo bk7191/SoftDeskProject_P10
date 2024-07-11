@@ -2,7 +2,7 @@ from rest_framework import serializers
 from rest_framework.serializers import ModelSerializer
 
 from .models import CustomUser
-
+from rest_framework.authtoken.models import Token
 
 class CustomUserSerializer(ModelSerializer):
     class Meta:
@@ -38,7 +38,11 @@ class CustomUserDetailedSerializer(ModelSerializer):
         return age
 
     def create(self, validated_data):
+        password = validated_data.pop("password")
         user = CustomUser.objects.create_user(**validated_data)
+        user.set_password(password)
+        user.save()
+
         print("user de serializer", user)
 
         return user
