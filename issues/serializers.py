@@ -16,7 +16,6 @@ class IssueSerializer(serializers.ModelSerializer):
     class Meta:
         model = Issue
         fields = "__all__"
-        depth = 2
 
     # def to_representation(self, instance):
     #     rep = super().to_representation(instance)

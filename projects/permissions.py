@@ -2,7 +2,8 @@ from rest_framework import permissions
 from rest_framework.exceptions import PermissionDenied
 from rest_framework.permissions import SAFE_METHODS, BasePermission
 
-from .models import Contributor
+from comments.models import Comment
+from .models import Contributor, Project
 from issues.models import Issue
 
 
@@ -87,21 +88,48 @@ class IsAuthor(BasePermission):
     # Allow any author to edit,
     # Assumes the model instance has an 'author' attribute.
 
+    def has_permission(self, request, view):
+        if request.method in permissions.SAFE_METHODS:
+            return True
+        else:
+            project_id = view.kwargs.get("project_pk")
+            current_user = request.user
+            project = Project.objects.filter(id=project_id).first()
+            if project:
+                if project.contributeurs.all().filter(user=current_user).count() > 0:
+                    return True
+                if current_user == project.author:
+                    return True
+            else:
+                return True
+        return False
+
     def has_object_permission(self, request, view, obj):
         if request.method in permissions.SAFE_METHODS:
             return True
-        return obj.author == request.user
+        if isinstance(obj, Project):
+            return obj.author == request.user
+        elif isinstance(obj, Issue):
+            return obj.created_by == request.user
+        elif isinstance(obj, Comment):
+            return obj.author == request.user
+        else:
+            return False
 
 
 class IsContributor(BasePermission):
+    #
     def has_permission(self, request, view):
-        if request.method == "POST":  # si il veut creer issue dans projet
-            project_id = request.data.get("projet")
+        if request.method in permissions.SAFE_METHODS:
+            return True
+        else:
+            project_id = view.kwargs.get("project_pk")
+
             current_user = request.user
-
-    def has_object_permission(self, request, view, obj):
-
-        if request.method == "DELETE":
-            if isinstance(obj, Issue):
-                return request.user == obj.assignee
-        return request.user in obj.contributors.all()
+            project = Project.objects.filter(id=project_id).first()
+            print('project contributors+++++++++++++', project.contributeurs.all())
+            if project.contributeurs.all().filter(user=current_user).count() > 0:
+                return True
+            if current_user == project.author:
+                return True
+        return False

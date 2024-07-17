@@ -12,11 +12,14 @@ class ContributorSerializer(serializers.ModelSerializer):
     class Meta:
         model = Contributor
         fields = "__all__"
+        read_only_fields = ['project']
 
     def create(self, validated_data):
+        projet_id = self.context['view'].kwargs.get('project_pk')
+        projet = Project.objects.filter(pk=projet_id).first()
         print("ContributorSerializer", validated_data)
         contributor = Contributor.objects.create(
-            project=validated_data["project"], user=validated_data["user"]
+            project=projet, user=validated_data["user"]
         )
         print(contributor)
         return contributor
@@ -69,6 +72,7 @@ class ProjectSerializer(serializers.ModelSerializer):
     class Meta:
         model = Project
         fields = [
+            "id",
             "name",
             "contributeurs",
             "description",

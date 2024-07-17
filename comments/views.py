@@ -10,7 +10,8 @@ from authentication.permissions import (
 )
 from comments.models import Comment
 from comments.serializers import CommentSerializer
-from projects.permissions import IsAuthor
+from issues.models import Issue
+from projects.permissions import IsAuthor, IsContributor
 
 
 class CommentViewSet(viewsets.ModelViewSet):
@@ -19,37 +20,11 @@ class CommentViewSet(viewsets.ModelViewSet):
 
     """
 
-    # authentication_classes = [JWTAuthentication]
-
-    # queryset = Comment.objects.all()
-    # serializer_class = CommentSerializer
-    # permission_classes = [IsAuthenticated, IsAuthenticatedOrReadOnly, IsAuthor]
-
-    # http_method_names = ["get", "put", "patch", "delete"]
-    # permission_classes = [IsAuthenticated, IsCreationAndIsStaff, ContributorPermission]
-
-    # def get_permissions(self):
-    #     if self.request.method == "GET":
-    #         permission_classes = [IsAuthenticated, ContributorPermission]
-    #     elif self.request.method in ["PUT", "PATCH", "DELETE"]:
-    #         permission_classes = [IsAuthenticated, IsAuthor]
-    #     return [permission() for permission in permission_classes]
-
-    # def get_queryset(self):
-    #     project_pk = self.kwargs["author_id"]
-    #     issue_pk = self.kwargs["issue_id"]
-    #     uuid = self.kwargs["id"]
-    #     return Comment.objects.filter(
-    #         issue__project__id=project_pk, issue_id=issue_pk, id=uuid
-    #     )
-    # comments/views.py
-
-    # class CommentViewSet(viewsets.ModelViewSet):
-    queryset = Comment.objects.all()
     serializer_class = CommentSerializer
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated & (IsContributor | IsAuthor)]
 
-    def perform_create(self, serializer):
-        issue_id = self.kwargs.get('issue_pk')
-        issue = Issue.objects.get(pk=issue_id)
-        serializer.save(author=self.request.user, issue=issue)
+    def get_queryset(self):
+        print(self.kwargs)
+        issue_pk = self.kwargs.get('issue_pk')
+        print("issues_pk----->", issue_pk)
+        return Comment.objects.filter(issue=issue_pk)

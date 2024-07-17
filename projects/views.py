@@ -7,6 +7,7 @@ from authentication.permissions import *
 from comments.serializers import CommentSerializer
 from issues.serializers import IssueSerializer
 from projects.mixins import *
+from projects.permissions import IsAuthor, IsContributor
 from projects.serializers import *
 
 
@@ -56,27 +57,9 @@ class ProjectViewSet(ModelViewSet, MultipleSerializerMixin):
     queryset = Project.objects.all()
     serializer_class = ProjectSerializer
     detail_serializer_class = ContributorDetailSerializer
-    issue_serializer_class = IssueSerializer
-    comments_serializer_class = CommentSerializer
+
     http_method_names = ["get", "post", "put", "delete"]
-    # permission_classes = [IsAuthenticated | IsContributor | IsAuthor]
-    permission_classes = [IsAuthenticated]
-
-    def get(self, request):
-        return Response({"message": "Authenticated"})
-
-    def put(self, request, *args, **kwargs):
-        kwargs["partial"] = True
-        author_queryset = Project.objects.filter(author_id=self.request.user.id)
-        print(author_queryset)
-        author_queryset.save()
-
-        return super().update(request, author_queryset, *kwargs)
-
-    # def get_serializer_class(self):
-    #     if self.action in ['retrieve', 'update', 'partial_update']:
-    #         return ProjectSerializer
-
+    permission_classes = [IsAuthenticated & IsAuthor]
 
     def update(self, request, *args, **kwargs):
         partial = kwargs.pop('partial', False)

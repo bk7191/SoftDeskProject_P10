@@ -43,3 +43,4 @@ class Contributor(models.Model):
     class Meta:
         verbose_name = "Contributor"
         verbose_name_plural = "Contributors"
+        unique_together = ('user', 'project')
