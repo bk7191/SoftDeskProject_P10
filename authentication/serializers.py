@@ -4,6 +4,7 @@ from rest_framework.serializers import ModelSerializer
 from .models import CustomUser
 from rest_framework.authtoken.models import Token
 
+
 class CustomUserSerializer(ModelSerializer):
     class Meta:
         model = CustomUser
@@ -15,6 +16,13 @@ class CustomUserSerializer(ModelSerializer):
         read_only_fields = ["created_time"]
         # ajout extra
         extra_kwargs = {"password": {"write_only": True}}
+
+    def to_representation(self, instance):
+        representation = super().to_representation(instance)
+        return {
+            'id': representation['id'],
+            'username': representation['username'],
+        }
 
 
 class CustomUserDetailedSerializer(ModelSerializer):

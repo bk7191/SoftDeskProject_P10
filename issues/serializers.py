@@ -6,8 +6,10 @@ from .models import Issue, Project
 
 
 class IssueSerializer(serializers.ModelSerializer):
+    assignee = CustomUserSerializer(fields=('id', 'username'), many=False, read_only=True)
     assignee_id = serializers.IntegerField(write_only=True)
-    assignee = CustomUserSerializer(many=False, read_only=True)
+
+    # assignee = CustomUserSerializer(many=False, read_only=True)
 
     # created_by = serializers.IntegerField(write_only=True, )
 
@@ -16,10 +18,10 @@ class IssueSerializer(serializers.ModelSerializer):
         fields = "__all__"
         depth = 2
 
-    def to_representation(self, instance):
-        rep = super().to_representation(instance)
-        rep['instance'] = instance.created_by.username if instance.created_by else None
-        return rep
+    # def to_representation(self, instance):
+    #     rep = super().to_representation(instance)
+    #     rep['instance'] = instance.created_by.username if instance.created_by else None
+    #     return rep
 
     def create(self, validated_data):
         projet_id = self.context['view'].kwargs.get('project_pk')
