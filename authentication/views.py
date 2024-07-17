@@ -27,7 +27,7 @@ class CustomUserViewSet(viewsets.ModelViewSet):
     queryset = CustomUser.objects.all()
     serializer_class = CustomUserSerializer
     detail_serializer_class = CustomUserDetailedSerializer
-    permission_classes = [IsStaffPermission]
+    permission_classes = [IsAuthenticated]
     # permission_classes = [IsAuthenticated | IsCreationAndIsStaff | IsOwnerOrReadOnly]
     filter_backends = [SearchFilter]
     search_fields = ["username"]

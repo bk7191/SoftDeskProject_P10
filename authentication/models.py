@@ -1,9 +1,18 @@
+from datetime import datetime
+
 from django.db import models
 from django.contrib.auth.models import AbstractUser, Group, Permission
 from datetime import date
 
 
 # Creation AbstractUser.
+
+def calculer_age(birth_date):
+    today = datetime.today()
+    age = today.year - birth_date.year
+    if today.month < birth_date.month or (today.month == birth_date.month and today.day < birth_date.day):
+        age -= 1
+    return age
 
 
 class CustomUser(AbstractUser):
@@ -13,7 +22,7 @@ class CustomUser(AbstractUser):
     password = models.CharField(max_length=255, blank=False)
     email = models.CharField(max_length=255, blank=False)
     # Attributs RGPD
-    age = models.CharField(max_length=2, blank=False, default=False)
+    date_of_birth = models.DateField(null=True, blank=True)
     consent_choice = models.BooleanField(default=False)
     can_be_contacted = models.BooleanField(default=False)
     can_data_be_shared = models.BooleanField(default=False)
@@ -24,3 +33,9 @@ class CustomUser(AbstractUser):
 
     def __str__(self):
         return self.username
+
+    @property
+    def age(self):
+        if not self.date_of_birth:
+            return None
+        return calculer_age(self.date_of_birth)

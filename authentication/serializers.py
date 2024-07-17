@@ -1,18 +1,16 @@
+from datetime import date
+
 from rest_framework import serializers
 from rest_framework.serializers import ModelSerializer
 
-from .models import CustomUser
+from .models import CustomUser, calculer_age
 from rest_framework.authtoken.models import Token
 
 
 class CustomUserSerializer(ModelSerializer):
     class Meta:
         model = CustomUser
-        fields = [
-            "id",
-            "username",
-            "password",
-        ]
+        fields = ["username"]
         read_only_fields = ["created_time"]
         # ajout extra
         extra_kwargs = {"password": {"write_only": True}}
@@ -20,7 +18,7 @@ class CustomUserSerializer(ModelSerializer):
     def to_representation(self, instance):
         representation = super().to_representation(instance)
         return {
-            'id': representation['id'],
+
             'username': representation['username'],
         }
 
@@ -30,20 +28,26 @@ class CustomUserDetailedSerializer(ModelSerializer):
 
     class Meta(CustomUserSerializer.Meta):
         fields = CustomUserSerializer.Meta.fields + [
+            "id",
+            "username",
+            "password",
             "first_name",
             "last_name",
             "email",
-            "age",
+            "date_of_birth",
             "consent_choice",
             "can_be_contacted",
             "can_data_be_shared",
         ]
+        read_only_fields = ["age"]
 
-    def validate_age(self, age):
+    def validate_date_of_birth(self, date_of_birth):
         authorized_age = 16
-        if int(age) < authorized_age:
+        age = calculer_age(date_of_birth)
+
+        if age < authorized_age:
             raise serializers.ValidationError(f'{authorized_age} ans requis svp')
-        return age
+        return date_of_birth
 
     def create(self, validated_data):
         password = validated_data.pop("password")
