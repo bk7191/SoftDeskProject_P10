@@ -1,4 +1,5 @@
 from rest_framework import viewsets
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.viewsets import ReadOnlyModelViewSet
 
 from issues.models import Issue
@@ -17,10 +18,13 @@ class IssueViewSet(viewsets.ModelViewSet):
 
     queryset = Issue.objects.all()
     serializer_class = IssueSerializer
-    # permission_classes = [IsAuthenticated, IsAuthenticatedOrReadOnly, ]
+    permission_classes = [IsAuthenticated]
 
     # permission_classes = [IsAuthenticated, IsCreationAndIsStaff, IsContributor]
     http_method_names = ["get", "post", "head", "patch", "delete"]
+
+    def perform_create(self, serializer):
+        serializer.save(created_by=self.request.user)
 
 
 class IssueReadOnlyViewSet(ReadOnlyModelViewSet):
