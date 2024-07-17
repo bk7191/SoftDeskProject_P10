@@ -9,7 +9,9 @@ from .models import Comment
 class CommentPostUpdateSerializer(serializers.ModelSerializer):
     class Meta:
         model = Comment
-        fields = ["text", "author", "created_time", "issue"]
+        # fields = ["text", "author", "created_time", "issue"]
+        fields = ['id', 'description', 'author', 'issue', 'created_time']
+
 
     author_id = serializers.IntegerField(write_only=True)
     issue = IssueSerializer(many=False, read_only=True)

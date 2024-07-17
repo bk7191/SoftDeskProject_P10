@@ -21,9 +21,9 @@ class CommentViewSet(viewsets.ModelViewSet):
 
     # authentication_classes = [JWTAuthentication]
 
-    queryset = Comment.objects.all()
-    serializer_class = CommentSerializer
-    permission_classes = [IsAuthenticated, IsAuthenticatedOrReadOnly, IsAuthor]
+    # queryset = Comment.objects.all()
+    # serializer_class = CommentSerializer
+    # permission_classes = [IsAuthenticated, IsAuthenticatedOrReadOnly, IsAuthor]
 
     # http_method_names = ["get", "put", "patch", "delete"]
     # permission_classes = [IsAuthenticated, IsCreationAndIsStaff, ContributorPermission]
@@ -42,3 +42,14 @@ class CommentViewSet(viewsets.ModelViewSet):
     #     return Comment.objects.filter(
     #         issue__project__id=project_pk, issue_id=issue_pk, id=uuid
     #     )
+    # comments/views.py
+
+    # class CommentViewSet(viewsets.ModelViewSet):
+    queryset = Comment.objects.all()
+    serializer_class = CommentSerializer
+    permission_classes = [IsAuthenticated]
+
+    def perform_create(self, serializer):
+        issue_id = self.kwargs.get('issue_pk')
+        issue = Issue.objects.get(pk=issue_id)
+        serializer.save(author=self.request.user, issue=issue)
