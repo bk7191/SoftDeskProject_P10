@@ -73,9 +73,9 @@ class ProjectViewSet(ModelViewSet, MultipleSerializerMixin):
 
         return super().update(request, author_queryset, *kwargs)
 
-    def get_serializer_class(self):
-        if self.action in ['retrieve', 'update', 'partial_update']:
-            return ProjectSerializer
+    # def get_serializer_class(self):
+    #     if self.action in ['retrieve', 'update', 'partial_update']:
+    #         return ProjectSerializer
 
 
     def update(self, request, *args, **kwargs):
