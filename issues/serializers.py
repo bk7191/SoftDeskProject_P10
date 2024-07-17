@@ -16,6 +16,11 @@ class IssueSerializer(serializers.ModelSerializer):
         fields = "__all__"
         depth = 2
 
+    def to_representation(self, instance):
+        rep = super().to_representation(instance)
+        rep['instance'] = instance.created_by.username if instance.created_by else None
+        return rep
+
     def create(self, validated_data):
         projet_id = self.context['view'].kwargs.get('project_pk')
         projet = Project.objects.filter(pk=projet_id).first()
