@@ -6,10 +6,10 @@ from .models import Issue, Project
 
 
 class IssueSerializer(serializers.ModelSerializer):
-    assignee = CustomUserSerializer(fields=('id', 'username'), many=False, read_only=True)
+    # assignee = CustomUserSerializer(fields=('id', 'username'), many=False, read_only=True)
     assignee_id = serializers.IntegerField(write_only=True)
 
-    # assignee = CustomUserSerializer(many=False, read_only=True)
+    assignee = CustomUserSerializer(many=False, read_only=True)
 
     # created_by = serializers.IntegerField(write_only=True, )
 
