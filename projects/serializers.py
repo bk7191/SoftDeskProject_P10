@@ -1,9 +1,6 @@
 from django.db.models import Q
-from rest_framework import serializers, request
+from rest_framework import serializers
 
-import comments
-import projects
-from authentication.models import CustomUser
 from authentication.serializers import CustomUserSerializer
 from .models import Project, Contributor
 

@@ -1,23 +1,14 @@
-from django.contrib.auth import authenticate
-from rest_framework import viewsets, status, generics
+from rest_framework import viewsets, generics
+from drf_yasg.utils import swagger_auto_schema
+from rest_framework import viewsets, generics
 from rest_framework.filters import SearchFilter
-from rest_framework.permissions import IsAdminUser, IsAuthenticated, AllowAny
+from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from rest_framework.decorators import action
 from rest_framework_simplejwt.authentication import JWTAuthentication
-from rest_framework_simplejwt.tokens import Token
-from drf_yasg.utils import swagger_auto_schema
 
-import authentication.models
-from projects.mixins import MultipleSerializerMixin, GetDetailSerializerClassMixin
+from projects.mixins import GetDetailSerializerClassMixin
 from .models import CustomUser
-from .permissions import (
-    IsAdminAuthenticated,
-    IsCreationAndIsStaff,
-    IsOwnerOrReadOnly,
-    IsStaffPermission, ContributorPermission,
-)
 from .serializers import CustomUserSerializer, CustomUserDetailedSerializer
 
 
@@ -75,36 +66,6 @@ class CustomUserSignupViewSet(viewsets.ModelViewSet, GetDetailSerializerClassMix
             return serializer_class
 
         return self.detail_serializer_class
-
-    # def get_permissions(self):
-    #     print('step 1')
-    #
-    #     if self.action == "list" or self.action == 'get':
-    #         print('step 2')
-    #         self.permissions_classes = [IsAdminAuthenticated]
-    #         return self.permissions_classes
-    #     print('step 3')
-    #
-    #     return self.permissions_classes
-
-    # def post(self, request, *args, **kwargs):
-    #     authentication_classes = [JWTAuthentication]
-    #     age = request.data.get("age")
-    #     username = request.data.get("username")
-    #     password = request.data.get("password")
-    #     user = authenticate(username=username, password=password)
-    #     print(age)
-    #     print("user de viewset", user)
-    #     if user is not None and age:
-    #         print(age)
-    #
-    #         token, created = authentication_classes.objects.get_or_create(username=user)
-    #         print(token.key)
-    #         return Response({"token": token.key}, status=status.HTTP_201_CREATED)
-    #     else:
-    #         return Response(
-    #             {"error": "Invalids credentials"}, status=status.HTTP_400_BAD_REQUEST
-    #         )
 
     def get(self, request):
         # liste request.users si request.user est enregistré

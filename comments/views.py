@@ -1,22 +1,14 @@
-from django.shortcuts import render
 from rest_framework import viewsets
 from rest_framework.permissions import IsAuthenticated
-from rest_framework_simplejwt.authentication import JWTAuthentication
 
-from authentication.permissions import (
-    IsCreationAndIsStaff,
-    IsAuthenticatedOrReadOnly,
-    ContributorPermission,
-)
 from comments.models import Comment
 from comments.serializers import CommentSerializer
-from issues.models import Issue
 from projects.permissions import IsAuthor, IsContributor
 
 
 class CommentViewSet(viewsets.ModelViewSet):
     """
-    class Issue réservée aux utilistateurs connectes et authentifiés
+    class Issue réservée aux utilisateurs connectes et authentifiés
 
     """
 

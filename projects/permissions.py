@@ -26,36 +26,6 @@ class IsProjectContributorAuthenticated(BasePermission):
         "PATCH": ["%(app_label)s.change_%(model_name)s"],
         "DELETE": ["%(app_label)s.delete_%(model_name)s"],
     }
-    #
-    # def has_permission(self, request, view):
-    #     if request.user.is_staff:
-    #         return True
-    #     if request.method == "POST":
-    #         project_contributors = [
-    #             user.user_id
-    #             for user in Contributor.objects.filter(
-    #                 project_id=validated_data["project_id"]
-    #             )
-    #         ]
-    #         if request.user.id in project_contributors:
-    #             return True
-    #         else:
-    #             raise PermissionDenied(
-    #                 "You must be contributing to this project to do this"
-    #             )
-    #     return request.user.is_authenticated
-    #
-    # def has_object_permission(self, request, view, obj):
-    #     project_contributors = [
-    #         user.user_id for user in Contributor.objects.filter(project_id=obj.id)
-    #     ]
-    #     if isinstance(obj, Issue):
-    #         project_contributors.extend(
-    #             user.user_id
-    #             for user in Contributor.objects.filter(project_id=obj.project)
-    #         )
-    #
-    #     return request.user.id in project_contributors
 
 
 class CanManageProjectContributors(BasePermission):

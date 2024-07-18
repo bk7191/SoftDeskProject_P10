@@ -4,10 +4,8 @@ from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
 
 from authentication.permissions import *
-from comments.serializers import CommentSerializer
-from issues.serializers import IssueSerializer
 from projects.mixins import *
-from projects.permissions import IsAuthor, IsContributor
+from projects.permissions import IsAuthor
 from projects.serializers import *
 
 
@@ -83,6 +81,3 @@ class ContributorViewSet(viewsets.ModelViewSet, GetDetailSerializerClassMixin):
     serializer_class = ContributorSerializer
     # permission_classes = [IsAuthenticated, IsCreationAndIsStaff]
     http_method_names = ["get", "post", "head", "patch", "delete"]
-
-    # def get_queryset(self):
-    #     return Contributor.objects.all()

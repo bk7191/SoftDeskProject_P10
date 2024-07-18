@@ -1,10 +1,7 @@
-from datetime import date
-
 from rest_framework import serializers
 from rest_framework.serializers import ModelSerializer
 
 from .models import CustomUser, calculer_age
-from rest_framework.authtoken.models import Token
 
 
 class CustomUserSerializer(ModelSerializer):

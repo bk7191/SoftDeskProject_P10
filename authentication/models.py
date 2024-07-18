@@ -1,8 +1,7 @@
 from datetime import datetime
 
-from django.db import models
 from django.contrib.auth.models import AbstractUser, Group, Permission
-from datetime import date
+from django.db import models
 
 
 # Creation AbstractUser.
