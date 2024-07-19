@@ -2,6 +2,7 @@ from rest_framework import viewsets
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
+from rest_framework_simplejwt.authentication import JWTAuthentication
 
 from projects.mixins import *
 from projects.permissions import IsAuthor
@@ -9,7 +10,7 @@ from projects.serializers import *
 
 
 class ProjectViewSet(ModelViewSet, MultipleSerializerMixin):
-    # authentication_classes = [JWTAuthentication]
+    authentication_classes = [JWTAuthentication]
     queryset = Project.objects.all()
     serializer_class = ProjectSerializer
     detail_serializer_class = ContributorDetailSerializer
