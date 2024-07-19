@@ -3,51 +3,9 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
 
-from authentication.permissions import *
 from projects.mixins import *
 from projects.permissions import IsAuthor
 from projects.serializers import *
-
-
-class AdminProjectsViewSet(
-    MultipleSerializerMixin, StaffEditorPermissionsMixin, ModelViewSet
-):
-    serializer_class = ProjectSerializer
-    detail_serializer_class = [ProjectDetailSerializer | ContributorDetailSerializer]
-    permission_classes = [IsAdminAuthenticated]
-
-    def get_queryset(self):
-        return Project.objects.all()
-
-
-class DisplayProjectMixin:
-    def list(self, request, *args, **kwargs):
-        queryset = self.filter_queryset(self.get_queryset())
-        serializer = self.get_serializer(queryset, many=True)
-        return Response(serializer.data)
-
-    def retrieve(self, request, *args, **kwargs):
-        instance = self.get_object()
-        serializer = self.get_serializer(instance)
-        return Response(serializer.data)
-
-    def get_issue(self, request, *args, **kwargs):
-        instance = self.get_object()
-        issue_queryset = instance.issue.all()
-        issue_serializer = self.get_issue_serializer(issue_queryset, many=True)
-        return Response(issue_serializer.data)
-
-    def get_comment(self, request, *args, **kwargs):
-        instance = self.get_object()
-        comment_queryset = instance.comment.all()
-        comment_serializer = self.get_comment_serializer(comment_queryset, many=True)
-        return Response(comment_serializer.data)
-
-    def get_issue_serializer(self, *args, **kwargs):
-        return self.serializer_class.issue_serializer_class(*args, **kwargs)
-
-    def get_comment_serializer(self, *args, **kwargs):
-        return self.serializer_class.comment_serializer_class(*args, **kwargs)
 
 
 class ProjectViewSet(ModelViewSet, MultipleSerializerMixin):
@@ -80,4 +38,5 @@ class ContributorViewSet(viewsets.ModelViewSet, GetDetailSerializerClassMixin):
     detail_serializer_class = ContributorDetailSerializer
     serializer_class = ContributorSerializer
     # permission_classes = [IsAuthenticated, IsCreationAndIsStaff]
-    http_method_names = ["get", "post", "head", "patch", "delete"]
+    http_method_names = ["get", "post", "put", "delete"]
+    permission_classes = [IsAuthenticated & IsAuthor]
