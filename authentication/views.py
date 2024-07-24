@@ -13,7 +13,7 @@ from .serializers import CustomUserSerializer, CustomUserDetailedSerializer
 
 
 class CustomUserViewSet(viewsets.ModelViewSet):
-    # authentication_classes = [JWTAuthentication]
+    authentication_classes = [JWTAuthentication]
 
     queryset = CustomUser.objects.all()
     serializer_class = CustomUserSerializer
