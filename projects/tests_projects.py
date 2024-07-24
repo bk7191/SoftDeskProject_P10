@@ -1,10 +1,11 @@
 # import unittest
-from config_API import settings
+
 import pytest
+import pytest_drf
 from django.test import TestCase
 from django.urls import reverse
 from pytest_drf import APIViewTest, Returns200, UsesGetMethod
-
+from config_API import *
 # from rest_framework.test import APIClient
 # from rest_framework import status
 from projects.models import Project
@@ -25,24 +26,69 @@ class TestHelloWorld(
         assert expected == actual
 
 
+def test_return_hello(client):
+    response = client.get('')
+    data = response.data.decode()
+    assert data == "Hello, Bienvenue dans SoftDeskApi!"
+
+
+class AdminProjectsViewSet(
+    MultipleSerializerMixin, StaffEditorPermissionsMixin, ModelViewSet
+):
+    serializer_class = ProjectSerializer
+    detail_serializer_class = [ProjectDetailSerializer | ContributorDetailSerializer]
+    permission_classes = [IsAdminAuthenticated]
+
+    def get_queryset(self):
+        return Project.objects.all()
+
+
+class DisplayProjectMixin:
+    def list(self, request, *args, **kwargs):
+        queryset = self.filter_queryset(self.get_queryset())
+        serializer = self.get_serializer(queryset, many=True)
+        return Response(serializer.data)
+
+    def retrieve(self, request, *args, **kwargs):
+        instance = self.get_object()
+        serializer = self.get_serializer(instance)
+        return Response(serializer.data)
+
+    def get_issue(self, request, *args, **kwargs):
+        instance = self.get_object()
+        issue_queryset = instance.issue.all()
+        issue_serializer = self.get_issue_serializer(issue_queryset, many=True)
+        return Response(issue_serializer.data)
+
+    def get_comment(self, request, *args, **kwargs):
+        instance = self.get_object()
+        comment_queryset = instance.comment.all()
+        comment_serializer = self.get_comment_serializer(comment_queryset, many=True)
+        return Response(comment_serializer.data)
+
+    def get_issue_serializer(self, *args, **kwargs):
+        return self.serializer_class.issue_serializer_class(*args, **kwargs)
+
+    def get_comment_serializer(self, *args, **kwargs):
+        return self.serializer_class.comment_serializer_class(*args, **kwargs)
 # from authentication.views import CustomUserViewSet
 # from authentication.serializers import CustomUserSerializer
 #
-class TestProjects(TestCase):
-    CHOICE_PROJECT = "back-end"
-
-    def setUp(self):
-        self.project_List = Project()
-        self.project_List.name = "Projet 1"
-        self.project_List.description = "desc. proj. 1"
-        self.project_List.project_type = self.CHOICE_PROJECT
-        self.project_List.author = "1"
-
-    def test_create_project(self):
-        nbr_of_projects_before_add = Project.objects.count()
-        print(nbr_of_projects_before_add)
-        nbr_of_projects_after_add = Project.objects.count()
-        print(nbr_of_projects_after_add)
+# class TestProjects(TestCase):
+#     CHOICE_PROJECT = "back-end"
+#
+#     def setUp(self):
+#         self.project_List = Project()
+#         self.project_List.name = "Projet 1"
+#         self.project_List.description = "desc. proj. 1"
+#         self.project_List.project_type = self.CHOICE_PROJECT
+#         self.project_List.author = "1"
+#
+#     def test_create_project(self):
+#         nbr_of_projects_before_add = Project.objects.count()
+#         print(nbr_of_projects_before_add)
+#         nbr_of_projects_after_add = Project.objects.count()
+#         print(nbr_of_projects_after_add)
 
 #
 # class TestCustomUserViewSet(TestCase):

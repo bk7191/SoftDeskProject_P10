@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     # Add your apps here to enable them
     "rest_framework",
+    # "rest_framework.authtoken",
     'corsheaders',
     "rest_framework_simplejwt",
     'drf_yasg',
@@ -88,13 +89,13 @@ REST_FRAMEWORK = {
 }
 SIMPLE_JWT = {
     "ACCESS_TOKEN_LIFETIME": timedelta(minutes=15),
-    "REFRESH_TOKEN_LIFETIME": timedelta(days=0),
+    "REFRESH_TOKEN_LIFETIME": timedelta(minutes=120),
     # ... (autres paramètres de configuration)
     "AUTH_HEAD/ER_TYPES": ("Bearer",),
-    'SLIDING_TOKEN_REFRESH_LIFETIME': timedelta(days=1),
-    'SLIDING_TOKEN_LIFETIME': timedelta(days=30),
-    'SLIDING_TOKEN_REFRESH_LIFETIME_LATE_USER': timedelta(days=1),
-    'SLIDING_TOKEN_LIFETIME_LATE_USER': timedelta(days=30),
+    'SLIDING_TOKEN_REFRESH_LIFETIME': timedelta(minutes=121),
+    'SLIDING_TOKEN_LIFETIME': timedelta(minutes=122),
+    'SLIDING_TOKEN_REFRESH_LIFETIME_LATE_USER': timedelta(minutes=121),
+    'SLIDING_TOKEN_LIFETIME_LATE_USER': timedelta(days=1),
 }
 
 # Template configuration

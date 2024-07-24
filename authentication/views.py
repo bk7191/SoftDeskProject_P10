@@ -33,22 +33,10 @@ class CustomUserViewSet(viewsets.ModelViewSet):
         return CustomUserSerializer
 
 
-class CreateUserView(generics.CreateAPIView):
-    queryset = CustomUser.objects.all()
-    serializer_class = CustomUserSerializer
-    detail_serializer_class = CustomUserDetailedSerializer
-    permissions_classes = [AllowAny]
-
-    def get_serializer_class(self):
-        user = CustomUser
-        if self.action == "post":
-            return CustomUserDetailedSerializer(user=user)
-
-        return CustomUserSerializer
-
-
 class CustomUserSignupViewSet(viewsets.ModelViewSet, GetDetailSerializerClassMixin):
     # print(authentication_classes)
+    authentication_classes = [JWTAuthentication]
+
     queryset = CustomUser.objects.all()
     serializer_class = CustomUserSerializer
     detail_serializer_class = CustomUserDetailedSerializer
@@ -75,7 +63,7 @@ class CustomUserSignupViewSet(viewsets.ModelViewSet, GetDetailSerializerClassMix
 
 
 class Home(APIView):
-    authentication_classes = [JWTAuthentication]
+    # authentication_classes = [JWTAuthentication]
 
     # permission_classes = [IsAuthenticated]
 

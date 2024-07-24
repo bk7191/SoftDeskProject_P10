@@ -10,7 +10,9 @@ from projects.serializers import *
 
 
 class ProjectViewSet(ModelViewSet, MultipleSerializerMixin):
-    authentication_classes = [JWTAuthentication]
+    # authentication_classes créée jeton dans authentication.views
+    # authentication_classes = [JWTAuthentication]
+
     queryset = Project.objects.all()
     serializer_class = ProjectSerializer
     detail_serializer_class = ContributorDetailSerializer
@@ -32,7 +34,6 @@ class ProjectViewSet(ModelViewSet, MultipleSerializerMixin):
 
 
 class ContributorViewSet(viewsets.ModelViewSet, GetDetailSerializerClassMixin):
-    # authentication_classes = [JWTAuthentication]
 
     queryset = Contributor.objects.all()
 
