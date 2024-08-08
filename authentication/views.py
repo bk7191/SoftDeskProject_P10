@@ -33,7 +33,7 @@ class CustomUserViewSet(viewsets.ModelViewSet):
         return CustomUserSerializer
 
 
-class CustomUserSignupViewSet(viewsets.ModelViewSet, GetDetailSerializerClassMixin):
+class CustomUserRegisterViewSet(viewsets.ModelViewSet, GetDetailSerializerClassMixin):
     # print(authentication_classes)
     authentication_classes = [JWTAuthentication]
 

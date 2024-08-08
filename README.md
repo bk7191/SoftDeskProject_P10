@@ -66,6 +66,7 @@ L'application permet de remonter et suivre des problèmes techniques (issue trac
     ```bash
         pip install poetry
         poetry install
+        poetry update
     ```
 * Effectuez les migrations
 * 
@@ -85,4 +86,4 @@ L'application permet de remonter et suivre des problèmes techniques (issue trac
 * #### "api/issue": "http://127.0.0.1:8000/api/projects/{pk}/issues/",
 * #### "api/comments": "http://127.0.0.1:8000/api/projects/{pk}/issues/",
 * #### "api/contributor": "http://127.0.0.1:8000/api/projects/{pk}/contributors/",
-* #### "signup": "http://127.0.0.1:8000/signup/"
+* #### "register": "http://127.0.0.1:8000/register/"

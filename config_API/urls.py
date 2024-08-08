@@ -1,19 +1,20 @@
 from django.contrib import admin
-from django.contrib.auth.views import LogoutView, LoginView
+from django.contrib.auth.views import LoginView, LogoutView
 from django.urls import path, include
-from rest_framework import permissions
 from drf_yasg import openapi
 from drf_yasg.views import get_schema_view
+from rest_framework import permissions
+from rest_framework_nested import routers
 from rest_framework_simplejwt.views import (
     TokenObtainPairView,
     TokenRefreshView,
     TokenVerifyView,
 )
-from authentication.views import CustomUserViewSet, CustomUserSignupViewSet, Home
+
+from authentication.views import CustomUserViewSet, CustomUserRegisterViewSet
 from comments.views import CommentViewSet
-from issues.views import IssueViewSet, IssueReadOnlyViewSet
+from issues.views import IssueViewSet
 from projects.views import ProjectViewSet, ContributorViewSet
-from rest_framework_nested import routers
 
 schema_view = get_schema_view(
     openapi.Info(
@@ -34,7 +35,7 @@ router = routers.DefaultRouter()
 router.register(r"users", CustomUserViewSet, basename="users")
 router.register(r"projects", ProjectViewSet, basename="projects")
 # registered= routers.NestedSimpleRouter(router, r'register', lookup='register-user')
-router.register(r"enregister", CustomUserSignupViewSet, basename="enregister")
+router.register(r"register", CustomUserRegisterViewSet, basename="register")
 
 projects_router = routers.NestedSimpleRouter(router, r"projects", lookup="project")
 projects_router.register(r"issues", IssueViewSet, basename="issues")
